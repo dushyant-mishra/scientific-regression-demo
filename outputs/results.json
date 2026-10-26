@@ -2,7 +2,7 @@
   "scope": "FICTIONAL_DEMO_LOCAL_PYTEST_NOT_GITHUB_HOSTED_EVIDENCE",
   "test_module": "tests/test_science_rules.py",
   "red_source_sha256": "16b7e3bae192244adb3f57dff45da2ac58d4154a5c5cbbbc96f695947d31106d",
-  "green_source_sha256": "373f110275bd4f29990067785d475989915330a240b4b6711aaf062a838fe8ab",
+  "green_source_sha256": "252227ecaf28833dc5b78dce3a1b85b3742f974c4392367eea2afd0e02734bff",
   "red": {
     "passed": 4,
     "failed": 6,
@@ -10,7 +10,7 @@
     "skipped": 0,
     "total": 10,
     "exit_code": 1,
-    "junit_sha256": "b6248a165b657ea88f5f764334d1fddbc192ddd7c09a5cf4f042ed745cf03437"
+    "junit_sha256": "3cacfe58ecd7fa43f6f62482ceda7f4e07607c668c438fc810f6ab70ee60dd94"
   },
   "green": {
     "passed": 10,
@@ -19,6 +19,6 @@
     "skipped": 0,
     "total": 10,
     "exit_code": 0,
-    "junit_sha256": "6b80511f38b7fac452ffb9544e625ef5cd4ea632953b8cbb8e5dd30ea9f6caee"
+    "junit_sha256": "f505f216ba71bc4567138a02326f5e2d7e7d04630d714fa2ff6a82d07dd900d6"
   }
 }

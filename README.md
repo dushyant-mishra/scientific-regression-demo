@@ -12,7 +12,9 @@ This is a teaching dataset: `gene_1`, `gene_2`, and `gene_3` are placeholder nam
 
 ## The example
 
-Our example has two small RNA studies. Each has three donors, each donor has two cells, and each cell has a row for each gene. That's **6 donors, 12 cells and 36 rows** in [the CSV](data/fictional_rna_observations.csv).
+Our RNA dataset contains two studies, three donors per study, two cells per donor, and three gene entries per cell. That's **6 donors, 12 cells, and 36 gene-by-cell rows** in [the CSV](data/fictional_rna_observations.csv).
+
+Later, the donor-counting test uses a **separate two-donor example** with 1,000 repeated row labels. It is not a different count of the donors in this CSV.
 
 | Study | Donor | Cell | Gene | Assayed? | RNA count |
 |---|---|---|---|---|---:|
@@ -33,6 +35,7 @@ You need Python 3.11 or later and Git. In a terminal:
 git clone https://github.com/dushyant-mishra/scientific-regression-demo.git
 cd scientific-regression-demo
 python -m pip install -r requirements.txt
+python try_examples.py
 python generate_fictional_data.py
 python analyze_fictional_rna.py
 python -m pytest -q
@@ -40,12 +43,12 @@ python run_demo.py
 python make_figures.py
 ```
 
-`generate_fictional_data.py` recreates the CSV. `analyze_fictional_rna.py` classifies each record as detected, measured zero, or unmeasured. `pytest` checks the rules. `run_demo.py` runs **the same tests twice**: first against deliberately broken code, then against the repair. `make_figures.py` rebuilds the charts from the saved CSV and actual test reports.
+Start with `try_examples.py`: it prints the three scientific rules in action without needing to understand pytest. `generate_fictional_data.py` recreates the CSV. `analyze_fictional_rna.py` classifies each record as detected, measured zero, or unmeasured. `pytest` checks the rules. `run_demo.py` runs **the same tests twice**: first against deliberately broken code, then against the repair. `make_figures.py` rebuilds the charts from the saved CSV and actual test reports.
 
 For the version prepared with this article, the local results were:
 
 ```text
-Full repository suite: 21 passed
+Full repository suite: 22 passed
 Deliberately broken code: 4 passed, 6 failed
 Repaired code: 10 passed, 0 failed
 ```
@@ -61,6 +64,14 @@ You can run everything locally. GitHub is useful because code changes: a collabo
 Try it yourself: fork the repository, make a new branch, change the correct function in `science_rules.py` to treat `None` as zero, and open a pull request. The tests should fail. Restore the correct function, push again, and watch them pass. Don't merge the broken change.
 
 A green check only says that the tests passed. It doesn't prove a biological hypothesis, that the tests are complete, or that the statistical method is correct. This exercise checks data-handling rules; it does not estimate differential expression or disease associations.
+
+## Which files should I read first?
+
+1. [`try_examples.py`](try_examples.py) — run three examples and see their outputs.
+2. [`science_rules.py`](science_rules.py) — read the three functions those examples call.
+3. [`tests/test_science_rules.py`](tests/test_science_rules.py) — see how a test checks the expected answer.
+
+The other scripts read the CSV, record test results, and build the figures. You can explore them afterward.
 
 ## Where to look
 

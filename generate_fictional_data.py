@@ -1,26 +1,38 @@
-"""Generate deliberately fictional RNA count observations for this tutorial.
-
-No real genes, donors, subjects, or sequencing data are used.
-"""
+"""Create the small RNA count table used throughout the tutorial."""
 import csv
 from pathlib import Path
 
-GENES = ("gene_1", "gene_2", "gene_3")  # Invented, not real gene symbols
+GENES = ("gene_1", "gene_2", "gene_3")
 FIELDNAMES = ("study", "donor_id", "cell_id", "gene", "assayed", "count")
 ROOT = Path(__file__).resolve().parent
 
 
 def rows():
-    for index in range(1, 7):
-        study = "study_a" if index <= 3 else "study_b"
-        donor = f"donor_{index:02d}"
-        for cell_index in (1, 2):
-            cell = f"cell_{(index - 1) * 2 + cell_index:02d}"
-            # Deterministic fictional values chosen to demonstrate zeros and detection.
-            a = 12 if index == 1 and cell_index == 1 else 3 + index + cell_index
-            b = 0 if (index + cell_index) % 2 == 0 else index + 1
-            c = 4 if index == 1 and cell_index == 1 else (index + cell_index) % 4
-            for gene, count in zip(GENES, (a, b, c)):
+    # Six donors, with two cells per donor. The first three donors belong to study_a.
+    for donor_number in range(1, 7):
+        study = "study_a" if donor_number <= 3 else "study_b"
+        donor = f"donor_{donor_number:02d}"
+
+        for cell_number_within_donor in (1, 2):
+            cell_number = (donor_number - 1) * 2 + cell_number_within_donor
+            cell = f"cell_{cell_number:02d}"
+
+            # Fixed teaching counts: some detected, some zero, and some unassayed.
+            gene_1_count = (
+                12 if donor_number == 1 and cell_number_within_donor == 1
+                else 3 + donor_number + cell_number_within_donor
+            )
+            gene_2_count = (
+                0 if (donor_number + cell_number_within_donor) % 2 == 0
+                else donor_number + 1
+            )
+            gene_3_count = (
+                4 if donor_number == 1 and cell_number_within_donor == 1
+                else (donor_number + cell_number_within_donor) % 4
+            )
+            counts = (gene_1_count, gene_2_count, gene_3_count)
+
+            for gene, count in zip(GENES, counts):
                 assayed = not (study == "study_b" and gene == "gene_3")
                 yield {
                     "study": study,
@@ -39,7 +51,7 @@ def main():
         writer = csv.DictWriter(stream, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows())
-    print(f"Wrote {dest.relative_to(ROOT)}: 36 fictional gene/cell observations")
+    print(f"Wrote {dest.relative_to(ROOT)}: 36 gene/cell observations")
 
 
 if __name__ == "__main__":
