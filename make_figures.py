@@ -19,8 +19,8 @@ COLORS = {"ink": "#20334A", "sub": "#475569", "green": "#287D75", "red": "#BD4C4
 
 
 def save(fig, slug):
-    fig.savefig(OUT / (slug + ".png"), dpi=200, facecolor="white")
-    fig.savefig(OUT / (slug + ".svg"), facecolor="white")
+    fig.savefig(OUT / (slug + ".png"), dpi=200, bbox_inches="tight", pad_inches=0.24, facecolor="white")
+    fig.savefig(OUT / (slug + ".svg"), bbox_inches="tight", pad_inches=0.24, facecolor="white")
     plt.close(fig)
 
 
@@ -54,8 +54,8 @@ def chart_tests():
     ax.set_axisbelow(True)
     for spine in ax.spines.values(): spine.set_visible(False)
     fig.suptitle("Do the tests catch the scientific-rule bugs?", fontsize=19, weight="bold", color=COLORS["ink"])
-    ax.set_title("Results parsed from local pytest JUnit reports • not invented counts", color=COLORS["sub"], fontsize=10, pad=19)
-    save(fig, "figure_2_actual_red_green")
+    ax.set_title("Counts parsed from executed pytest reports", color=COLORS["sub"], fontsize=10, pad=19)
+    save(fig, "figure_2_test_results_v2")
 
 
 def chart_matrix():
@@ -83,9 +83,9 @@ def chart_matrix():
     ax.set_xlim(-.5,3.45)
     ax.set_ylim(len(cells)-.5,-.5)
     for s in ax.spines.values():s.set_visible(False)
-    ax.set_title("A fictional RNA experiment: zero is not missing", fontsize=18,weight="bold",color=COLORS["ink"],pad=50,loc="left")
+    ax.set_title("RNA measurements: zero is not missing", fontsize=18,weight="bold",color=COLORS["ink"],pad=50,loc="left")
     fig.legend(handles=[Patch(color=COLORS["blue"],label="RNA detected (+)"),Patch(color=COLORS["pale"],label="Measured count = 0"),Patch(color=COLORS["gray"],label="Gene not assayed (—)")],loc="lower center",ncol=3,frameon=False,bbox_to_anchor=(.52,.045),fontsize=10)
-    save(fig,"figure_1_fictional_rna_matrix")
+    save(fig,"figure_1_rna_measurements_v2")
 
 
 def chart_workflow():
@@ -109,7 +109,7 @@ def chart_workflow():
         ax.text(1.0,y-.09,desc,fontsize=10.4,ha="left",va="center",color=COLORS["sub"])
         if i < len(steps)-1:
             ax.annotate("",xy=(5,y-1.06),xytext=(5,y-0.66),arrowprops={"arrowstyle":"-|>","color":COLORS["sub"],"lw":1.4})
-    save(fig,"figure_3_workflow")
+    save(fig,"figure_3_regression_workflow_v2")
 
 
 def chart_replicates():
@@ -125,11 +125,11 @@ def chart_replicates():
     ax.set_ylim(0,max(yy)*1.18)
     ax.set_ylabel("Count",color=COLORS["ink"])
     ax.set_title("1,000 computational rows ≠ 1,000 donors",fontsize=18,weight="bold",loc="left",pad=20,color=COLORS["ink"])
-    fig.text(.16,.89,"Two fictional donors; 500 computational draws per donor",color=COLORS["sub"],fontsize=10.5)
+    fig.text(.16,.89,"Two donors; 500 computational draws per donor",color=COLORS["sub"],fontsize=10.5)
     for spine in ax.spines.values():spine.set_visible(False)
     ax.grid(axis="y",alpha=.13)
     ax.set_axisbelow(True)
-    save(fig,"figure_4_donor_vs_rows")
+    save(fig,"figure_4_donor_units_v2")
 
 
 def main():
