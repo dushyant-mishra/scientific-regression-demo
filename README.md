@@ -23,7 +23,7 @@ Our example has two small RNA studies. Each has three donors, each donor has two
 
 The second row is a **measured zero**: the assay looked for RNA from `gene_2` and detected none in that cell. The fourth row is **not a zero**: Study B did not assay `gene_3` at all. That difference matters when combining datasets.
 
-![RNA measurement table drawn from the CSV](figures/figure_1_fictional_rna_matrix.png)
+![RNA measurement table drawn from the CSV](figures/figure_1_rna_measurements_v2.png)
 
 ## Try it on your computer
 
@@ -45,14 +45,14 @@ python make_figures.py
 For the version prepared with this article, the local results were:
 
 ```text
-Full repository suite: 18 passed
+Full repository suite: 21 passed
 Deliberately broken code: 4 passed, 6 failed
 Repaired code: 10 passed, 0 failed
 ```
 
 Those numbers are recorded test results, not biological findings. They can change if you edit the tests. The chart reads the saved pytest/JUnit reports instead of assuming those numbers.
 
-![Actual RED and GREEN test results](figures/figure_2_actual_red_green.png)
+![Actual RED and GREEN test results](figures/figure_2_test_results_v2.png)
 
 ## Why put it on GitHub?
 
