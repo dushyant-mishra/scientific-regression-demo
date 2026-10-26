@@ -1,4 +1,4 @@
-name: Fictional RNA scientific regression checks
+name: RNA scientific regression checks
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
-      - name: Rebuild and inspect fictional RNA example
+      - name: Rebuild and inspect RNA example
         run: |
           python generate_fictional_data.py
           python analyze_fictional_rna.py
