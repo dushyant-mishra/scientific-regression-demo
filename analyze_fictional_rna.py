@@ -1,4 +1,4 @@
-"""Read the fictional CSV and summarize the *measurement statuses* (not biology)."""
+"""Read the RNA example CSV and count measured, zero, and unmeasured entries."""
 import csv
 import json
 from collections import Counter, defaultdict
@@ -9,6 +9,7 @@ from science_rules import observation_state
 
 
 def analyze(input_file: Path) -> tuple[list[dict], dict]:
+    # Keep results separate by study and gene.
     counters = defaultdict(Counter)
     donor_by_study = defaultdict(set)
     cells_by_study = defaultdict(set)
@@ -27,6 +28,7 @@ def analyze(input_file: Path) -> tuple[list[dict], dict]:
             if identity in seen:
                 raise ValueError("duplicate measurement identity")
             seen.add(identity)
+            # The assay flag matters: unassayed and measured-zero are different.
             if row["assayed"] not in ("true", "false"):
                 raise ValueError("assayed must be lowercase true/false")
             measured = row["assayed"] == "true"
@@ -44,6 +46,7 @@ def analyze(input_file: Path) -> tuple[list[dict], dict]:
         raise ValueError("expected exactly 36 illustrative measurement rows")
     if donor_by_study["study_a"] & donor_by_study["study_b"]:
         raise ValueError("donor identities overlap across studies")
+    # Turn the counters into a small table for the final report.
     summary = []
     for (study, gene), ct in sorted(counters.items()):
         summary.append({

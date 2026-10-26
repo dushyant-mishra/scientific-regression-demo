@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="10" time="0.063" timestamp="2026-10-26T20:05:46.513510+00:00" hostname="c4ce7ba7cf33"><testcase classname="tests.test_science_rules" name="test_01_zero_is_not_unmeasured" time="0.018"><failure message="AssertionError: assert 'MEASURED_ZERO' == 'UNMEASURED'&#10;  &#10;  - UNMEASURED&#10;  + MEASURED_ZERO">def test_01_zero_is_not_unmeasured():
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="10" time="0.067" timestamp="2026-10-26T20:37:25.851056+00:00" hostname="c4ce7ba7cf33"><testcase classname="tests.test_science_rules" name="test_01_zero_is_not_unmeasured" time="0.020"><failure message="AssertionError: assert 'MEASURED_ZERO' == 'UNMEASURED'&#10;  &#10;  - UNMEASURED&#10;  + MEASURED_ZERO">def test_01_zero_is_not_unmeasured():
         assert rules.observation_state(measured=True, count=0) == "MEASURED_ZERO"
 &gt;       assert rules.observation_state(measured=False, count=None) == "UNMEASURED"
 E       AssertionError: assert 'MEASURED_ZERO' == 'UNMEASURED'
@@ -6,7 +6,7 @@ E
 E         - UNMEASURED
 E         + MEASURED_ZERO
 
-tests/test_science_rules.py:15: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_02_technical_rows_are_not_independent_donors" time="0.001"><failure message="AssertionError: assert {'biological_...l_rows': 1000} == {'biological_...l_rows': 1000}&#10;  &#10;  Omitting 1 identical items, use -vv to show&#10;  Differing items:&#10;  {'biological_n': 1000} != {'biological_n': 2}&#10;  &#10;  Full diff:&#10;    {&#10;  -     'biological_n': 2,&#10;  ?                     ^&#10;  +     'biological_n': 1000,&#10;  ?                     ^^^^&#10;        'technical_rows': 1000,&#10;    }">def test_02_technical_rows_are_not_independent_donors():
+../scientific_regression_demo_v3/tests/test_science_rules.py:15: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_02_technical_rows_are_not_independent_donors" time="0.001"><failure message="AssertionError: assert {'biological_...l_rows': 1000} == {'biological_...l_rows': 1000}&#10;  &#10;  Omitting 1 identical items, use -vv to show&#10;  Differing items:&#10;  {'biological_n': 1000} != {'biological_n': 2}&#10;  &#10;  Full diff:&#10;    {&#10;  -     'biological_n': 2,&#10;  ?                     ^&#10;  +     'biological_n': 1000,&#10;  ?                     ^^^^&#10;        'technical_rows': 1000,&#10;    }">def test_02_technical_rows_are_not_independent_donors():
         x = ["donor_01"] * 500 + ["donor_02"] * 500
 &gt;       assert rules.replication_summary(x) == {"technical_rows": 1000, "biological_n": 2}
 E       AssertionError: assert {'biological_...l_rows': 1000} == {'biological_...l_rows': 1000}
@@ -24,26 +24,26 @@ E         ?                     ^^^^
 E               'technical_rows': 1000,
 E           }
 
-tests/test_science_rules.py:20: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_03_insufficient_second_study_cannot_pass" time="0.000"><failure message="AssertionError: assert 'PASS' == 'NOT_ESTIMABLE'&#10;  &#10;  - NOT_ESTIMABLE&#10;  + PASS">def test_03_insufficient_second_study_cannot_pass():
+../scientific_regression_demo_v3/tests/test_science_rules.py:20: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_03_insufficient_second_study_cannot_pass" time="0.000"><failure message="AssertionError: assert 'PASS' == 'NOT_ESTIMABLE'&#10;  &#10;  - NOT_ESTIMABLE&#10;  + PASS">def test_03_insufficient_second_study_cannot_pass():
 &gt;       assert rules.evidence_verdict({"study_a": "PASS", "study_b": "NOT_ESTIMABLE"}) == "NOT_ESTIMABLE"
 E       AssertionError: assert 'PASS' == 'NOT_ESTIMABLE'
 E         
 E         - NOT_ESTIMABLE
 E         + PASS
 
-tests/test_science_rules.py:24: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_04_positive_count_is_detected" time="0.000" /><testcase classname="tests.test_science_rules" name="test_05_two_distinct_donors_count_as_two" time="0.000" /><testcase classname="tests.test_science_rules" name="test_06_two_required_studies_pass" time="0.000" /><testcase classname="tests.test_science_rules" name="test_07_assay_flag_must_be_a_real_bool" time="0.000"><failure message="Failed: DID NOT RAISE any of (&lt;class 'TypeError'&gt;, &lt;class 'ValueError'&gt;)">def test_07_assay_flag_must_be_a_real_bool():
+../scientific_regression_demo_v3/tests/test_science_rules.py:24: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_04_positive_count_is_detected" time="0.000" /><testcase classname="tests.test_science_rules" name="test_05_two_distinct_donors_count_as_two" time="0.000" /><testcase classname="tests.test_science_rules" name="test_06_two_required_studies_pass" time="0.000" /><testcase classname="tests.test_science_rules" name="test_07_assay_flag_must_be_a_real_bool" time="0.000"><failure message="Failed: DID NOT RAISE any of (&lt;class 'TypeError'&gt;, &lt;class 'ValueError'&gt;)">def test_07_assay_flag_must_be_a_real_bool():
 &gt;       with pytest.raises((TypeError, ValueError)):
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 E       Failed: DID NOT RAISE any of (&lt;class 'TypeError'&gt;, &lt;class 'ValueError'&gt;)
 
-tests/test_science_rules.py:40: Failed</failure></testcase><testcase classname="tests.test_science_rules" name="test_08_empty_required_study_set_is_invalid" time="0.000"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">def test_08_empty_required_study_set_is_invalid():
+../scientific_regression_demo_v3/tests/test_science_rules.py:40: Failed</failure></testcase><testcase classname="tests.test_science_rules" name="test_08_empty_required_study_set_is_invalid" time="0.000"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">def test_08_empty_required_study_set_is_invalid():
 &gt;       with pytest.raises(ValueError):
              ^^^^^^^^^^^^^^^^^^^^^^^^^
 E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
 
-tests/test_science_rules.py:45: Failed</failure></testcase><testcase classname="tests.test_science_rules" name="test_09_known_failure_takes_precedence_over_missing_study" time="0.000" /><testcase classname="tests.test_science_rules" name="test_10_invalid_count_is_rejected" time="0.000"><failure message="Failed: DID NOT RAISE any of (&lt;class 'TypeError'&gt;, &lt;class 'ValueError'&gt;)">def test_10_invalid_count_is_rejected():
+../scientific_regression_demo_v3/tests/test_science_rules.py:45: Failed</failure></testcase><testcase classname="tests.test_science_rules" name="test_09_known_failure_takes_precedence_over_missing_study" time="0.000" /><testcase classname="tests.test_science_rules" name="test_10_invalid_count_is_rejected" time="0.000"><failure message="Failed: DID NOT RAISE any of (&lt;class 'TypeError'&gt;, &lt;class 'ValueError'&gt;)">def test_10_invalid_count_is_rejected():
 &gt;       with pytest.raises((TypeError, ValueError)):
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 E       Failed: DID NOT RAISE any of (&lt;class 'TypeError'&gt;, &lt;class 'ValueError'&gt;)
 
-tests/test_science_rules.py:54: Failed</failure></testcase></testsuite></testsuites>
+../scientific_regression_demo_v3/tests/test_science_rules.py:54: Failed</failure></testcase></testsuite></testsuites>

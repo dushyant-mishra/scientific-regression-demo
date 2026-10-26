@@ -65,66 +65,92 @@ This is the first scientific rule we will protect.
 
 None of these rules determines whether a gene is differentially expressed. They protect the meaning of the input and output labels before more sophisticated statistics are attempted.
 
-## 3. Write the code that represents the biology
+## 3. Follow the code, one rule at a time
 
-Create a file called `science_rules.py`. Here is the first function from the downloadable project:
+Before looking at the tests, try the three examples from the repository:
+
+```bash
+python try_examples.py
+```
+
+You should see `MEASURED_ZERO` for the measured zero, `UNMEASURED` for the gene that was not assayed, **1,000 rows but only two donors**, and `NOT_ESTIMABLE` for the study without enough evidence. Each of these outputs comes from a function in [`science_rules.py`](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/science_rules.py).
+
+### Rule A — A zero is not missing data
 
 ```python
-
 def observation_state(*, measured: bool, count: int | None) -> str:
+    """Distinguish a measured zero from a gene that was not assayed."""
+    # A string such as "false" must not be mistaken for the Boolean False.
     if type(measured) is not bool:
         raise TypeError("measured must be a bool")
+
     if not measured:
         if count is not None:
             raise ValueError("an unmeasured observation must have no count")
         return "UNMEASURED"
+
+    # Booleans are integers in Python, so require exactly int here.
     if type(count) is not int or count < 0:
         raise ValueError("a measured count must be a nonnegative integer")
-    return "MEASURED_ZERO" if count == 0 else "MEASURED_DETECTED"
+
+    if count == 0:
+        return "MEASURED_ZERO"
+    return "MEASURED_DETECTED"
 ```
 
-**Walkthrough:**
+Read it from top to bottom:
 
-First, `measured` must be a real Boolean—`True` or `False`, not the string `"false"`. This prevents a surprisingly common mistake: nonempty strings are truthy in Python.
+1. Check that `measured` is an actual Boolean (`True` or `False`), not the string `"false"`.
+2. If the gene was not assayed, require `count=None` and return `UNMEASURED`.
+3. Otherwise, require a nonnegative integer count. Return `MEASURED_ZERO` for 0 or `MEASURED_DETECTED` for a positive number.
 
-If `measured` is false, a numeric count is forbidden and the result is `UNMEASURED`.
+The `*` in the function signature means we must name the arguments when calling it—for example, `observation_state(measured=True, count=0)`. This helps prevent mixing up the assay flag and the count.
 
-If the gene was measured, a valid nonnegative integer count is required. Zero becomes `MEASURED_ZERO`; a positive value becomes `MEASURED_DETECTED`.
-
-Our second function counts observations and unique donor IDs separately:
+### Rule B — Rows and donors are different counts
 
 ```python
-
 def replication_summary(donor_ids: list[str]) -> dict[str, int]:
-    if not donor_ids or any(type(d) is not str or not d.strip() for d in donor_ids):
+    """Count observation rows and distinct donor IDs separately."""
+    if not donor_ids:
         raise ValueError("donor_ids must contain valid nonempty donor IDs")
-    return {"technical_rows": len(donor_ids), "biological_n": len(set(donor_ids))}
+
+    for donor_id in donor_ids:
+        if type(donor_id) is not str or not donor_id.strip():
+            raise ValueError("donor_ids must contain valid nonempty donor IDs")
+
+    return {
+        "technical_rows": len(donor_ids),
+        "biological_n": len(set(donor_ids)),
+    }
 ```
 
-`len(donor_ids)` counts rows. `len(set(donor_ids))` counts distinct donor identifiers. A production system would also authenticate donor identity and model its experimental structure; this function only illustrates the counting rule.
+Here, `len(donor_ids)` counts all supplied rows. `set(donor_ids)` keeps each donor identifier only once, so `len(set(donor_ids))` counts distinct donors. The input checks prevent empty or malformed donor labels.
 
-The third function implements the example decision policy:
+### Rule C — Missing evidence cannot turn into a PASS
 
-```python
+The third function, `evidence_verdict()`, uses this decision order:
 
-def evidence_verdict(source_status, required=("study_a", "study_b")):
-    if not required or len(set(required)) != len(required):
-        raise ValueError("required studies cannot be empty or duplicated")
-    present = [source_status[s] for s in required if s in source_status]
-    if "FAIL" in present:
-        return "FAIL"
-    if len(present) < len(required) or "NOT_ESTIMABLE" in present:
-        return "NOT_ESTIMABLE"
-    return "PASS"
+```text
+If a required study has a known FAIL → FAIL
+Otherwise, if any required study is missing or NOT_ESTIMABLE → NOT_ESTIMABLE
+Otherwise, if all required studies PASS → PASS
 ```
 
-*This last excerpt shows the decision logic only; the repository version additionally checks the argument types and allowed status values. Run the full version from the repository.*
+The [complete Python function](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/science_rules.py) also checks the supplied study names and status values. This is a chosen rule for our exercise, not a general statistical method for combining studies.
+
+To explore the repository, read **`try_examples.py` → `science_rules.py` → `tests/test_science_rules.py`** in that order. The CSV reader and figure-generation code can come later.
 
 ## 4. What does a regression test look like?
 
 A regression test asks: “If somebody changes this code tomorrow, will this scientific rule still hold?”
 
-We use Python's `pytest` package. For example:
+We use Python's `pytest` package. To try the small test examples below in your own test file, begin with:
+
+```python
+from science_rules import observation_state, replication_summary, evidence_verdict
+```
+
+Then write a test like this:
 
 ```python
 
@@ -160,7 +186,7 @@ def test_insufficient_second_study_cannot_pass():
     assert evidence_verdict(statuses) == "NOT_ESTIMABLE"
 ```
 
-The complete `tests/test_science_rules.py` includes ten behavior tests, including edge cases discovered during independent review: invalid assay flags, an empty required-study list, and a known failed study alongside absent evidence.
+The repository's actual test file has a small import switch so the *same ten tests* can run against either the buggy or corrected implementation. You do not need to change that switch yourself. The complete `tests/test_science_rules.py` includes ten behavior tests, including edge cases discovered during independent review: invalid assay flags, an empty required-study list, and a known failed study alongside absent evidence.
 
 ## 5. Deliberately introduce bugs: RED → GREEN
 
@@ -229,11 +255,12 @@ python -m pip install -r requirements.txt
 **Step 3 — Rebuild the dataset and analyze it.**
 
 ```bash
+python try_examples.py
 python generate_fictional_data.py
 python analyze_fictional_rna.py
 ```
 
-This writes `data/fictional_rna_observations.csv` and summary receipts in `outputs/`. In the included example, Study B has **six `UNMEASURED` records for gene_3 and zero measured-zero records for that gene**. Those values come from the actual CSV processing code.
+The first command prints three small worked examples. The next two rebuild `data/fictional_rna_observations.csv` and create summary files in `outputs/`. In the included example, Study B has **six `UNMEASURED` records for gene_3 and zero measured-zero records for that gene**. Those values come from the actual CSV processing code.
 
 **Step 4 — Run the full test suite.**
 
@@ -241,7 +268,7 @@ This writes `data/fictional_rna_observations.csv` and summary receipts in `outpu
 python -m pytest -q
 ```
 
-The version documented in this article has **21 passing tests** in a local run, including the ten behavior tests demonstrated above. Your results may differ if you modify the code or add tests.
+The version documented in this article has **22 passing tests** in a local run, including the ten behavior tests demonstrated above. Your results may differ if you modify the code or add tests.
 
 **Step 5 — Reproduce the RED/GREEN evidence and figures.**
 
