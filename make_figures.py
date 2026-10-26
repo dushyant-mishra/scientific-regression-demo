@@ -19,8 +19,8 @@ COLORS = {"ink": "#20334A", "sub": "#475569", "green": "#287D75", "red": "#BD4C4
 
 
 def save(fig, slug):
-    fig.savefig(OUT / (slug + ".png"), dpi=200, facecolor="white")
-    fig.savefig(OUT / (slug + ".svg"), facecolor="white")
+    fig.savefig(OUT / (slug + ".png"), dpi=200, bbox_inches="tight", pad_inches=0.24, facecolor="white")
+    fig.savefig(OUT / (slug + ".svg"), bbox_inches="tight", pad_inches=0.24, facecolor="white")
     plt.close(fig)
 
 
