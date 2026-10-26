@@ -8,11 +8,11 @@ A Python script can run without errors and still get the biology wrong. This lit
 - Counting repeated observations as if they came from different donors.
 - Reporting that two studies support a finding when one has too little information to judge it.
 
-The data are entirely made up. The genes are simply `gene_1`, `gene_2` and `gene_3`—not real gene symbols. The cells, donors, studies and counts are invented too. The point is to test how code handles evidence, **not** to make a biological discovery.
+This is a teaching dataset: `gene_1`, `gene_2`, and `gene_3` are placeholder names, and the observations were generated for this exercise.
 
 ## The example
 
-Imagine two small RNA studies. Each has three donors, each donor has two cells, and each cell has a row for each gene. That's **6 donors, 12 cells and 36 rows** in [the CSV](data/fictional_rna_observations.csv).
+Our example has two small RNA studies. Each has three donors, each donor has two cells, and each cell has a row for each gene. That's **6 donors, 12 cells and 36 rows** in [the CSV](data/fictional_rna_observations.csv).
 
 | Study | Donor | Cell | Gene | Assayed? | RNA count |
 |---|---|---|---|---|---:|
@@ -60,12 +60,12 @@ You can run everything locally. GitHub is useful because code changes: a collabo
 
 Try it yourself: fork the repository, make a new branch, change the correct function in `science_rules.py` to treat `None` as zero, and open a pull request. The tests should fail. Restore the correct function, push again, and watch them pass. Don't merge the broken change.
 
-A green check only says that the tests passed. It doesn't prove a biological hypothesis, that the tests are complete, or that the statistical method is correct.
+A green check only says that the tests passed. It doesn't prove a biological hypothesis, that the tests are complete, or that the statistical method is correct. This exercise checks data-handling rules; it does not estimate differential expression or disease associations.
 
 ## Where to look
 
 - [**Article and walkthrough**](MEDIUM_ARTICLE.md) — the reasoning behind each test, screenshots/figures, and a GitHub step-by-step guide.
-- [`data/fictional_rna_observations.csv`](data/fictional_rna_observations.csv) — the invented RNA observations.
+- [`data/fictional_rna_observations.csv`](data/fictional_rna_observations.csv) — the example measurements.
 - [`science_rules.py`](science_rules.py) and [`science_rules_buggy.py`](science_rules_buggy.py) — correct and deliberately wrong versions.
 - [`tests/`](tests) — checks for biological rules, CSV processing and report integrity.
 - [`outputs/`](outputs) and [`figures/`](figures) — the local run receipts and plots (PNG and SVG).
@@ -75,8 +75,7 @@ A green check only says that the tests passed. It doesn't prove a biological hyp
 
 You're welcome to clone, fork and adapt the code under the [MIT license](LICENSE). If you use it in teaching or writing, please cite the repository. GitHub's **Cite this repository** menu reads [`CITATION.cff`](CITATION.cff). For reproducibility, add the commit SHA you actually used:
 
-> dushyant-mishra. (2026). *Scientific Regression Demo: Fictional RNA Data, Regression Tests, and GitHub Actions* [Software and teaching materials]. GitHub. https://github.com/dushyant-mishra/scientific-regression-demo (commit `<SHA>`).
+> dushyant-mishra. (2026). *Scientific Regression Demo: RNA Data, Regression Tests, and GitHub Actions* [Software and teaching materials]. GitHub. https://github.com/dushyant-mishra/scientific-regression-demo (commit `<SHA>`).
 
 There is no DOI for this project. You can cite the [article](MEDIUM_ARTICLE.md) separately after it is published on Medium.
 
-*Note:* This project does not calculate differential expression or test any disease association. It demonstrates data-handling rules and software regression tests with fictional observations.

@@ -1,6 +1,6 @@
 # When AI Writes Your RNA Analysis Code, Who Checks the Science?
 
-*An illustrated, hands-on guide to scientific regression tests, fictional gene-expression data, Python, GitHub Actions, and independent AI-agent review.*
+*An illustrated, hands-on guide to scientific regression tests, RNA data, Python, GitHub Actions, and independent AI-agent review.*
 
 Imagine you are comparing RNA expression between two studies. An AI coding agent helps you write Python to read the data and summarize the results. The script runs without an error. The plots look reasonable.
 
@@ -12,17 +12,17 @@ These mistakes may produce no Python exception. They are mistakes in scientific 
 
 This tutorial shows how to catch them using **regression tests**: short programs that check whether software still respects a defined rule after its code changes. Here, *regression testing* means checking for recurring software defects. It does **not** mean fitting a statistical regression model.
 
-**Run the complete example:** [github.com/dushyant-mishra/scientific-regression-demo](https://github.com/dushyant-mishra/scientific-regression-demo). It includes the fictional CSV, Python scripts, ten behavior tests, additional integration/reporting tests, a GitHub Actions workflow, and figures generated from the actual test reports.
+**Run the complete example:** [github.com/dushyant-mishra/scientific-regression-demo](https://github.com/dushyant-mishra/scientific-regression-demo). It includes the example dataset, Python scripts, ten behavior tests, additional integration/reporting tests, a GitHub Actions workflow, and figures generated from the actual test reports.
 
-> **Everything in this example is fictional.** The genes `gene_1`, `gene_2`, and `gene_3` are invented teaching labels, not biological gene names. The donors, cells, studies, counts, outcomes, and figures are artificial. Nothing here is a claim about human biology.
+> **About the data:** This is a made-up teaching dataset. `gene_1`, `gene_2`, and `gene_3` are placeholder names, and none of the measurements comes from a real study.
 
-## 1. The fictional RNA experiment
+## 1. The RNA experiment
 
-Our imaginary lab has measured RNA in six fictional donors, three from Study A and three from Study B. Each donor contributes two fictional cells. For each cell we keep a row for each of three invented genes, giving **12 cells × 3 genes = 36 records**.
+We compare RNA measurements from two studies, each with three donors. Each donor has two cells, and each cell has an entry for three genes. That gives **6 donors, 12 cells, and 36 records**.
 
 - **gene_1** is measured in both studies and has positive counts in our example.
 - **gene_2** is measured in both studies, but sometimes has a zero count.
-- **gene_3** is measured in Study A; Study B's fictional panel does *not* assay it.
+- **gene_3** is measured in Study A; Study B's assay panel does *not* include it.
 
 A few rows from the actual included file `data/fictional_rna_observations.csv`:
 
@@ -33,11 +33,11 @@ A few rows from the actual included file `data/fictional_rna_observations.csv`:
 | study_a | donor_01 | cell_01 | gene_3 | true | 4 |
 | study_b | donor_04 | cell_07 | gene_3 | false | *empty* |
 
-All these data are generated deterministically by `generate_fictional_data.py`; they are not downloaded or simulated to resemble any specific real person.
+The included `generate_fictional_data.py` script recreates the dataset whenever you run it.
 
-![Fictional RNA measurement matrix with positive counts, measured zeros, and structurally unassayed genes](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_1_fictional_rna_matrix.png)
+![RNA measurement matrix with positive counts, measured zeros, and structurally unassayed genes](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_1_fictional_rna_matrix.png)
 
-*Figure 1. Each row is one fictional cell. A plus sign means RNA was detected, `0` means the gene was assayed but no molecules were detected, and a dash means the gene was not assayed. Study B never assays gene_3. Figure produced from the included CSV.*
+*Figure 1. Each row represents one cell. A plus sign means RNA was detected, `0` means the gene was assayed but no molecules were detected, and a dash means the gene was not assayed. Study B never assays gene_3. Figure produced from the included CSV.*
 
 ### Why the difference matters
 
@@ -145,9 +145,9 @@ def test_technical_rows_are_not_independent_donors():
     assert result == {"technical_rows": 1000, "biological_n": 2}
 ```
 
-The example is intentionally stark: **1,000 computer-generated rows still represent only two distinct fictional donor IDs**.
+The example is intentionally stark: **1,000 computer-generated rows still represent only two distinct donor IDs**.
 
-![Fictional donor accounting contrasts 1000 computational rows with 2 independent donors](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_4_donor_vs_rows.png)
+![Donor accounting contrasts 1000 computational rows with 2 independent donors](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_4_donor_vs_rows.png)
 
 *Figure 2. Generated from an actual invocation of the included donor-counting function. This is a teaching example of counting units, not a statistical analysis of real RNA observations.*
 
@@ -244,7 +244,7 @@ python -m pip install -r requirements.txt
 
 `pytest` runs the tests. `matplotlib` draws the figures. Everything else uses Python's standard library.
 
-**Step 3 — Rebuild the fictional dataset and analyze it.**
+**Step 3 — Rebuild the dataset and analyze it.**
 
 ```bash
 python generate_fictional_data.py
@@ -272,11 +272,11 @@ The RED process is *supposed to fail its tests*. `run_demo.py` captures that exp
 
 **Step 6 — Create a change on a branch.** If you forked the repository, create a branch in your copy, change one implementation rule, and push the branch. You can deliberately reintroduce the `not count` defect as an educational exercise, but do not merge broken code into a branch others rely on.
 
-**Step 7 — Open a pull request.** GitHub's **Actions** tab will show the workflow named *Fictional RNA scientific regression checks*. It checks out the submitted revision, installs Python and dependencies, runs tests, reproduces RED/GREEN, and rebuilds the figures. The saved workflow artifacts contain result logs.
+**Step 7 — Open a pull request.** GitHub's **Actions** tab will show the workflow named *RNA scientific regression checks*. It checks out the submitted revision, installs Python and dependencies, runs tests, reproduces RED/GREEN, and rebuilds the figures. The saved workflow artifacts contain result logs.
 
 **Step 8 — Review the test result, not just the green icon.** Open the workflow log. Verify the number of tests executed, whether anything was skipped, and whether the scientific rule is actually tested. If your repository supports rulesets/branch protection, you can configure its regression workflow as a required check before merging.
 
-I executed the original test evidence locally; this article does **not** claim that a hosted GitHub Actions run has already succeeded. You can inspect the repository's Actions tab for its current hosted status.
+The results discussed earlier were captured from local runs. For hosted results on the current repository revision, check the **Actions** tab and inspect the workflow logs.
 
 ## 9. Using an AI coding agent responsibly
 
@@ -292,19 +292,19 @@ The second reviewer should not merely repeat the first agent's claims. They shou
 
 ## 10. What passing tests *do not* prove
 
-This fictional example does **not** test differential expression, causal regulation, disease association, statistical power or replication of any real gene. It does not prove that a donor-level estimator is correctly calibrated: it simply catches a donor-counting mistake. And combining source-level `PASS` labels is not a substitute for proper statistical modeling of multiple studies.
+This exercise does **not** test differential expression, causal regulation, disease association, statistical power or biological replication. It does not prove that a donor-level estimator is correctly calibrated: it simply catches a donor-counting mistake. And combining source-level `PASS` labels is not a substitute for proper statistical modeling of multiple studies.
 
 A test can faithfully implement the wrong scientific assumption. A passing CI build can therefore still contain an invalid scientific analysis. The safeguard is to make assumptions visible, include positive and negative controls, review the data provenance, and subject both code and tests to independent challenge.
 
 ## 11. Reuse and citation
 
-All data in the tutorial are fictitious, and the code is released with the repository. The README gives the exact commands and explains the toy dataset.
+The code, data generator, and instructions are available in the repository. The README has the exact commands needed to reproduce the figures and test results.
 
 If you reuse the code or its teaching example, cite the **repository at the exact commit you used**, because the repository can change. The repository includes a `CITATION.cff` file so GitHub can display **Cite this repository** where supported.
 
 Suggested citation (replace the placeholder commit hash with the one you actually used):
 
-> dushyant-mishra. (2026). *Scientific Regression Demo: Fictional RNA Data, Regression Tests, and GitHub Actions* [Computer software and teaching materials]. GitHub. https://github.com/dushyant-mishra/scientific-regression-demo (commit: `<COMMIT_SHA>`).
+> dushyant-mishra. (2026). *Scientific Regression Demo: RNA Data, Regression Tests, and GitHub Actions* [Computer software and teaching materials]. GitHub. https://github.com/dushyant-mishra/scientific-regression-demo (commit: `<COMMIT_SHA>`).
 
 There is **no DOI assigned** to this demonstration at the time of writing. If a permanent archived release/DOI is created in the future, use that release's citation metadata rather than inventing a DOI now. This Medium article can be cited separately by its final publication URL and date.
 
@@ -318,4 +318,4 @@ For computational biology, that is a powerful habit to build:
 
 **Define the scientific distinction → write the test → demonstrate failure → repair → rerun → review independently → protect against regression on GitHub.**
 
-*Disclosure: Tutorial counts and figures come from executed local Python/pytest runs on fictional inputs. No real patient, human RNA/DNA data, biological findings, or verified hosted GitHub Actions outcomes are presented.*
+
