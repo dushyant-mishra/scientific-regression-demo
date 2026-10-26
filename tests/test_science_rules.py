@@ -16,12 +16,12 @@ def test_01_zero_is_not_unmeasured():
 
 
 def test_02_technical_rows_are_not_independent_donors():
-    x = ["DONOR_01"] * 500 + ["DONOR_02"] * 500
+    x = ["donor_01"] * 500 + ["donor_02"] * 500
     assert rules.replication_summary(x) == {"technical_rows": 1000, "biological_n": 2}
 
 
 def test_03_insufficient_second_study_cannot_pass():
-    assert rules.evidence_verdict({"STUDY_A": "PASS", "STUDY_B": "NOT_ESTIMABLE"}) == "NOT_ESTIMABLE"
+    assert rules.evidence_verdict({"study_a": "PASS", "study_b": "NOT_ESTIMABLE"}) == "NOT_ESTIMABLE"
 
 
 def test_04_positive_count_is_detected():
@@ -33,7 +33,7 @@ def test_05_two_distinct_donors_count_as_two():
 
 
 def test_06_two_required_studies_pass():
-    assert rules.evidence_verdict({"STUDY_A": "PASS", "STUDY_B": "PASS"}) == "PASS"
+    assert rules.evidence_verdict({"study_a": "PASS", "study_b": "PASS"}) == "PASS"
 
 
 def test_07_assay_flag_must_be_a_real_bool():
@@ -47,7 +47,7 @@ def test_08_empty_required_study_set_is_invalid():
 
 
 def test_09_known_failure_takes_precedence_over_missing_study():
-    assert rules.evidence_verdict({"STUDY_A": "FAIL"}) == "FAIL"
+    assert rules.evidence_verdict({"study_a": "FAIL"}) == "FAIL"
 
 
 def test_10_invalid_count_is_rejected():

@@ -76,7 +76,7 @@ def chart_matrix():
     ax.text(2.58,2.3,"Study A",ha="left",va="center",color=COLORS["sub"],fontsize=10)
     ax.text(2.58,8.4,"Study B",ha="left",va="center",color=COLORS["sub"],fontsize=10)
     ax.set_xticks(range(len(genes)),genes)
-    ax.set_yticks(range(len(cells)),["D"+c.split("_")[2]+" · cell "+c.split("_")[-1] for c in cells])
+    ax.set_yticks(range(len(cells)),cells)
     ax.tick_params(length=0,pad=7)
     ax.xaxis.tick_top()
     ax.invert_yaxis()
@@ -114,7 +114,7 @@ def chart_workflow():
 
 def chart_replicates():
     from science_rules import replication_summary
-    ids=["FIC_DONOR_A"]*500+["FIC_DONOR_B"]*500
+    ids=["donor_01"]*500+["donor_02"]*500
     result=replication_summary(ids)
     fig,ax=plt.subplots(figsize=(8.5,4.8),layout="constrained")
     xx=[0,1]

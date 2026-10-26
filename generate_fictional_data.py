@@ -5,23 +5,23 @@ No real genes, donors, subjects, or sequencing data are used.
 import csv
 from pathlib import Path
 
-GENES = ("FIC-A01", "FIC-B02", "FIC-C03")  # Invented, not real gene symbols
+GENES = ("gene_1", "gene_2", "gene_3")  # Invented, not real gene symbols
 FIELDNAMES = ("study", "donor_id", "cell_id", "gene", "assayed", "count")
 ROOT = Path(__file__).resolve().parent
 
 
 def rows():
     for index in range(1, 7):
-        study = "STUDY_A" if index <= 3 else "STUDY_B"
-        donor = f"DONOR_{index:02d}"
+        study = "study_a" if index <= 3 else "study_b"
+        donor = f"donor_{index:02d}"
         for cell_index in (1, 2):
-            cell = f"FIC_CELL_{index:02d}_{cell_index}"
+            cell = f"cell_{(index - 1) * 2 + cell_index:02d}"
             # Deterministic fictional values chosen to demonstrate zeros and detection.
             a = 12 if index == 1 and cell_index == 1 else 3 + index + cell_index
             b = 0 if (index + cell_index) % 2 == 0 else index + 1
             c = 4 if index == 1 and cell_index == 1 else (index + cell_index) % 4
             for gene, count in zip(GENES, (a, b, c)):
-                assayed = not (study == "STUDY_B" and gene == "FIC-C03")
+                assayed = not (study == "study_b" and gene == "gene_3")
                 yield {
                     "study": study,
                     "donor_id": donor,

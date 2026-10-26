@@ -2,11 +2,11 @@
   "fictional": true,
   "observations": 36,
   "by_study": {
-    "STUDY_A": {
+    "study_a": {
       "cells": 6,
       "donors": 3
     },
-    "STUDY_B": {
+    "study_b": {
       "cells": 6,
       "donors": 3
     }
