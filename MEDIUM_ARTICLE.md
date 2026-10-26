@@ -191,23 +191,21 @@ GREEN 10 passed, 0 failed, 0 errors
 
 Why is this important? **A test that has never demonstrated it can catch a defect gives limited reassurance.** RED is valuable because it shows the test notices the kind of error it claims to guard against. GREEN shows that the repaired software satisfies those same tests.
 
-## 6. The independent reviewer finds another bug
+## 6. Make the test results reproducible
 
-Our first version of this tutorial passed its tests and produced a convincing before/after chart. But a separate review found something embarrassing: the result-reporting script had hard-coded the numbers shown in the figure.
+The tests are only part of the evidence. A plot that says “6 failed” should get that number from the **executed tests**, not from a value typed into the plotting script.
 
-If another test failed tomorrow, the chart could still display yesterday's numbers.
+Our project uses a simple, traceable path:
 
-That would make a tutorial about reproducibility less reproducible.
+`pytest` → JUnit XML reports → `outputs/results.json` → Figure 3
 
-The updated implementation fixes this in three ways:
+- `run_demo.py` runs the same test suite against the faulty and corrected implementations and saves a separate JUnit XML report for each run.
+- `junit_results.py` counts the actual `<testcase>` entries and their failures or errors. It rejects empty reports instead of trusting a summary number.
+- `make_figures.py` reads the parsed results and draws the RED/GREEN bars.
 
-1. `run_demo.py` executes two subprocesses and produces JUnit XML reports for both.
-2. `junit_results.py` counts the actual `<testcase>` records and their failure/error elements. An empty report is rejected.
-3. `make_figures.py` builds its bars from the parsed JSON results rather than fixed numeric arrays.
+The reporting code has regression tests of its own. One deliberately supplies XML whose summary header disagrees with its test cases; the parser must use the test-case records. Another changes the input counts and checks that the plotted values change.
 
-We added an adversarial regression test: change the XML from two passes to one pass plus one failure, **without changing its misleading summary header**. The parser must report the actual testcase results. Another test changes input result counts and checks that the chart's bar data change too.
-
-This is a useful lesson about AI agents and software audits: **a green test suite does not establish that the tests, reports, or charts are themselves correct**. Those components also need checks.
+**Try it:** run `python run_demo.py` and `python make_figures.py`, then compare Figure 3 with `outputs/red_pytest.xml`, `outputs/green_pytest.xml`, and `outputs/results.json`. This lets a reader check the evidence behind the chart, not just the picture.
 
 ## 7. Why GitHub if we can run the tests locally?
 
@@ -310,12 +308,10 @@ There is **no DOI assigned** to this demonstration at the time of writing. If a 
 
 ## Final thought
 
-The most interesting part of this exercise wasn't that an AI agent could write a Python test. It was that a later review found a reporting defect **in the very code we were using to demonstrate reproducibility**.
+The important habit is to turn scientific assumptions into tests that run whenever the analysis changes.
 
-We did not need a bigger model to fix that. We needed a clear rule, a falsifying test, authentic output, and another independent look.
+Here, the rules are concrete: a gene that was not assayed is not a measured zero; repeated observations do not create additional independent donors; and insufficient evidence cannot silently become a positive result. The same tests work locally and in GitHub Actions, with results tied to the code revision that produced them.
 
-For computational biology, that is a powerful habit to build:
+AI coding agents can help write and repair the implementation. A second reviewer can challenge the tests and try cases the first agent missed. Neither replaces the researcher's responsibility to define the scientific rule.
 
-**Define the scientific distinction → write the test → demonstrate failure → repair → rerun → review independently → protect against regression on GitHub.**
-
-
+**Define the rule → demonstrate a failing case → repair the code → rerun unchanged tests → review the evidence → guard against regressions on GitHub.**
