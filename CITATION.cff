@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Please cite the exact GitHub commit of this fictional educational example."
+type: software
+title: "Scientific Regression Demo: Fictional RNA Data, Regression Tests, and GitHub Actions"
+authors:
+  - name: "dushyant-mishra"
+repository-code: "https://github.com/dushyant-mishra/scientific-regression-demo"
+url: "https://github.com/dushyant-mishra/scientific-regression-demo"
+date-released: 2026-10-26
+license: MIT
+abstract: "An executable educational example of scientific regression tests using entirely fictional RNA gene names, donors, counts, and GitHub Actions."
+keywords:
+  - bioinformatics
+  - regression testing
+  - reproducibility
+  - RNA sequencing
+  - GitHub Actions

@@ -1,0 +1,15 @@
+{
+  "fictional": true,
+  "observations": 36,
+  "by_study": {
+    "STUDY_A": {
+      "cells": 6,
+      "donors": 3
+    },
+    "STUDY_B": {
+      "cells": 6,
+      "donors": 3
+    }
+  },
+  "n_donors_total": 6
+}
