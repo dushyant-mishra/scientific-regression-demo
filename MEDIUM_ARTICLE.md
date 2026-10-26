@@ -18,7 +18,9 @@ This tutorial shows how to catch them using **regression tests**: short programs
 
 ## 1. The RNA experiment
 
-We compare RNA measurements from two studies, each with three donors. Each donor has two cells, and each cell has an entry for three genes. That gives **6 donors, 12 cells, and 36 records**.
+Our main RNA dataset contains two studies with three donors each. Every donor contributes two cells, and each cell has three gene entries. That gives **6 donors, 12 cells, and 36 gene-by-cell records**.
+
+**Keep the two examples separate:** the RNA dataset has six donors. Later, to explain pseudoreplication, we use a *different*, deliberately small example with **two donor IDs repeated across 1,000 computational rows**. Those 1,000 rows are not from this RNA dataset.
 
 - **gene_1** is measured in both studies and has positive counts in our example.
 - **gene_2** is measured in both studies, but sometimes has a zero count.
@@ -73,7 +75,7 @@ Before looking at the tests, try the three examples from the repository:
 python try_examples.py
 ```
 
-You should see `MEASURED_ZERO` for the measured zero, `UNMEASURED` for the gene that was not assayed, **1,000 rows but only two donors**, and `NOT_ESTIMABLE` for the study without enough evidence. Each of these outputs comes from a function in [`science_rules.py`](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/science_rules.py).
+You should see `MEASURED_ZERO` for the measured zero, `UNMEASURED` for the gene that was not assayed, **1,000 rows but only two distinct donors** in the separate repeated-observation example, and `NOT_ESTIMABLE` for the study without enough evidence. Each of these outputs comes from a function in [`science_rules.py`](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/science_rules.py).
 
 ### Rule A — A zero is not missing data
 
@@ -171,11 +173,11 @@ def test_technical_rows_are_not_independent_donors():
     assert result == {"technical_rows": 1000, "biological_n": 2}
 ```
 
-The example is intentionally stark: **1,000 computer-generated rows still represent only two distinct donor IDs**.
+This **separate two-donor example** starts with 500 rows labeled `donor_01` and 500 labeled `donor_02`. It illustrates the distinction between counting rows and counting independent donors; it does not describe the six-donor RNA CSV.
 
 ![Donor accounting contrasts 1000 computational rows with 2 independent donors](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_4_donor_units_v2.png)
 
-*Figure 2. Generated from an actual invocation of the included donor-counting function. This is a teaching example of counting units, not a statistical analysis of real RNA observations.*
+*Figure 2. A separate two-donor demonstration: 1,000 repeated row labels correspond to two distinct donors, not to 1,000 independent biological replicates.*
 
 For cross-study evidence:
 
