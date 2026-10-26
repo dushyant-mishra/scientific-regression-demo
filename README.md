@@ -12,7 +12,9 @@ This is a teaching dataset: `gene_1`, `gene_2`, and `gene_3` are placeholder nam
 
 ## The example
 
-Our example has two small RNA studies. Each has three donors, each donor has two cells, and each cell has a row for each gene. That's **6 donors, 12 cells and 36 rows** in [the CSV](data/fictional_rna_observations.csv).
+Our RNA dataset contains two studies, three donors per study, two cells per donor, and three gene entries per cell. That's **6 donors, 12 cells, and 36 gene-by-cell rows** in [the CSV](data/fictional_rna_observations.csv).
+
+Later, the donor-counting test uses a **separate two-donor example** with 1,000 repeated row labels. It is not a different count of the donors in this CSV.
 
 | Study | Donor | Cell | Gene | Assayed? | RNA count |
 |---|---|---|---|---|---:|
