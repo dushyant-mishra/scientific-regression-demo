@@ -14,30 +14,30 @@ This tutorial shows how to catch them using **regression tests**: short programs
 
 **Run the complete example:** [github.com/dushyant-mishra/scientific-regression-demo](https://github.com/dushyant-mishra/scientific-regression-demo). It includes the fictional CSV, Python scripts, ten behavior tests, additional integration/reporting tests, a GitHub Actions workflow, and figures generated from the actual test reports.
 
-> **Everything in this example is fictional.** The genes `FIC-A01`, `FIC-B02`, and `FIC-C03` are invented teaching labels, not biological gene names. The donors, cells, studies, counts, outcomes, and figures are artificial. Nothing here is a claim about human biology.
+> **Everything in this example is fictional.** The genes `gene_1`, `gene_2`, and `gene_3` are invented teaching labels, not biological gene names. The donors, cells, studies, counts, outcomes, and figures are artificial. Nothing here is a claim about human biology.
 
 ## 1. The fictional RNA experiment
 
 Our imaginary lab has measured RNA in six fictional donors, three from Study A and three from Study B. Each donor contributes two fictional cells. For each cell we keep a row for each of three invented genes, giving **12 cells × 3 genes = 36 records**.
 
-- **FIC-A01** is measured in both studies and has positive counts in our example.
-- **FIC-B02** is measured in both studies, but sometimes has a zero count.
-- **FIC-C03** is measured in Study A; Study B's fictional panel does *not* assay it.
+- **gene_1** is measured in both studies and has positive counts in our example.
+- **gene_2** is measured in both studies, but sometimes has a zero count.
+- **gene_3** is measured in Study A; Study B's fictional panel does *not* assay it.
 
 A few rows from the actual included file `data/fictional_rna_observations.csv`:
 
 | Study | Donor | Cell | Gene | Assayed? | RNA count |
 |---|---|---|---|---|---:|
-| STUDY_A | DONOR_01 | FIC_CELL_01_1 | FIC-A01 | true | 12 |
-| STUDY_A | DONOR_01 | FIC_CELL_01_1 | FIC-B02 | true | 0 |
-| STUDY_A | DONOR_01 | FIC_CELL_01_1 | FIC-C03 | true | 4 |
-| STUDY_B | DONOR_04 | FIC_CELL_04_1 | FIC-C03 | false | *empty* |
+| study_a | donor_01 | cell_01 | gene_1 | true | 12 |
+| study_a | donor_01 | cell_01 | gene_2 | true | 0 |
+| study_a | donor_01 | cell_01 | gene_3 | true | 4 |
+| study_b | donor_04 | cell_07 | gene_3 | false | *empty* |
 
 All these data are generated deterministically by `generate_fictional_data.py`; they are not downloaded or simulated to resemble any specific real person.
 
 ![Fictional RNA measurement matrix with positive counts, measured zeros, and structurally unassayed genes](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_1_fictional_rna_matrix.png)
 
-*Figure 1. Each row is one fictional cell. A plus sign means RNA was detected, `0` means the gene was assayed but no molecules were detected, and a dash means the gene was not assayed. Study B never assays FIC-C03. Figure produced from the included CSV.*
+*Figure 1. Each row is one fictional cell. A plus sign means RNA was detected, `0` means the gene was assayed but no molecules were detected, and a dash means the gene was not assayed. Study B never assays gene_3. Figure produced from the included CSV.*
 
 ### Why the difference matters
 
@@ -107,7 +107,7 @@ The third function implements the example decision policy:
 
 ```python
 
-def evidence_verdict(source_status, required=("STUDY_A", "STUDY_B")):
+def evidence_verdict(source_status, required=("study_a", "study_b")):
     if not required or len(set(required)) != len(required):
         raise ValueError("required studies cannot be empty or duplicated")
     present = [source_status[s] for s in required if s in source_status]
@@ -140,7 +140,7 @@ For donor accounting:
 ```python
 
 def test_technical_rows_are_not_independent_donors():
-    ids = ["DONOR_01"] * 500 + ["DONOR_02"] * 500
+    ids = ["donor_01"] * 500 + ["donor_02"] * 500
     result = replication_summary(ids)
     assert result == {"technical_rows": 1000, "biological_n": 2}
 ```
@@ -156,7 +156,7 @@ For cross-study evidence:
 ```python
 
 def test_insufficient_second_study_cannot_pass():
-    statuses = {"STUDY_A": "PASS", "STUDY_B": "NOT_ESTIMABLE"}
+    statuses = {"study_a": "PASS", "study_b": "NOT_ESTIMABLE"}
     assert evidence_verdict(statuses) == "NOT_ESTIMABLE"
 ```
 
@@ -251,7 +251,7 @@ python generate_fictional_data.py
 python analyze_fictional_rna.py
 ```
 
-This writes `data/fictional_rna_observations.csv` and summary receipts in `outputs/`. In the included example, Study B has **six `UNMEASURED` records for FIC-C03 and zero measured-zero records for that gene**. Those values come from the actual CSV processing code.
+This writes `data/fictional_rna_observations.csv` and summary receipts in `outputs/`. In the included example, Study B has **six `UNMEASURED` records for gene_3 and zero measured-zero records for that gene**. Those values come from the actual CSV processing code.
 
 **Step 4 — Run the full test suite.**
 
@@ -259,7 +259,7 @@ This writes `data/fictional_rna_observations.csv` and summary receipts in `outpu
 python -m pytest -q
 ```
 
-The version documented in this article has **17 passing tests** in a local run: ten behavior tests, three data/integration tests, and four result-reporting tests. Your results may differ if you modify the code or add tests.
+The version documented in this article has **18 passing tests** in a local run: ten behavior tests, four data/integration tests, and four result-reporting tests. Your results may differ if you modify the code or add tests.
 
 **Step 5 — Reproduce the RED/GREEN evidence and figures.**
 

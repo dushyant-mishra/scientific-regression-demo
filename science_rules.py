@@ -26,7 +26,7 @@ def replication_summary(donor_ids: list[str]) -> dict[str, int]:
 
 def evidence_verdict(
     source_status: dict[str, str],
-    required: tuple[str, ...] = ("STUDY_A", "STUDY_B"),
+    required: tuple[str, ...] = ("study_a", "study_b"),
 ) -> str:
     """An illustrative, *predeclared* rule for combining source-level statuses.
 

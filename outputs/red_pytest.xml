@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="10" time="0.072" timestamp="2026-10-26T19:49:07.071941+00:00" hostname="c4ce7ba7cf33"><testcase classname="tests.test_science_rules" name="test_01_zero_is_not_unmeasured" time="0.021"><failure message="AssertionError: assert 'MEASURED_ZERO' == 'UNMEASURED'&#10;  &#10;  - UNMEASURED&#10;  + MEASURED_ZERO">def test_01_zero_is_not_unmeasured():
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="10" time="0.063" timestamp="2026-10-26T20:05:46.513510+00:00" hostname="c4ce7ba7cf33"><testcase classname="tests.test_science_rules" name="test_01_zero_is_not_unmeasured" time="0.018"><failure message="AssertionError: assert 'MEASURED_ZERO' == 'UNMEASURED'&#10;  &#10;  - UNMEASURED&#10;  + MEASURED_ZERO">def test_01_zero_is_not_unmeasured():
         assert rules.observation_state(measured=True, count=0) == "MEASURED_ZERO"
 &gt;       assert rules.observation_state(measured=False, count=None) == "UNMEASURED"
 E       AssertionError: assert 'MEASURED_ZERO' == 'UNMEASURED'
@@ -7,7 +7,7 @@ E         - UNMEASURED
 E         + MEASURED_ZERO
 
 tests/test_science_rules.py:15: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_02_technical_rows_are_not_independent_donors" time="0.001"><failure message="AssertionError: assert {'biological_...l_rows': 1000} == {'biological_...l_rows': 1000}&#10;  &#10;  Omitting 1 identical items, use -vv to show&#10;  Differing items:&#10;  {'biological_n': 1000} != {'biological_n': 2}&#10;  &#10;  Full diff:&#10;    {&#10;  -     'biological_n': 2,&#10;  ?                     ^&#10;  +     'biological_n': 1000,&#10;  ?                     ^^^^&#10;        'technical_rows': 1000,&#10;    }">def test_02_technical_rows_are_not_independent_donors():
-        x = ["DONOR_01"] * 500 + ["DONOR_02"] * 500
+        x = ["donor_01"] * 500 + ["donor_02"] * 500
 &gt;       assert rules.replication_summary(x) == {"technical_rows": 1000, "biological_n": 2}
 E       AssertionError: assert {'biological_...l_rows': 1000} == {'biological_...l_rows': 1000}
 E         
@@ -25,7 +25,7 @@ E               'technical_rows': 1000,
 E           }
 
 tests/test_science_rules.py:20: AssertionError</failure></testcase><testcase classname="tests.test_science_rules" name="test_03_insufficient_second_study_cannot_pass" time="0.000"><failure message="AssertionError: assert 'PASS' == 'NOT_ESTIMABLE'&#10;  &#10;  - NOT_ESTIMABLE&#10;  + PASS">def test_03_insufficient_second_study_cannot_pass():
-&gt;       assert rules.evidence_verdict({"STUDY_A": "PASS", "STUDY_B": "NOT_ESTIMABLE"}) == "NOT_ESTIMABLE"
+&gt;       assert rules.evidence_verdict({"study_a": "PASS", "study_b": "NOT_ESTIMABLE"}) == "NOT_ESTIMABLE"
 E       AssertionError: assert 'PASS' == 'NOT_ESTIMABLE'
 E         
 E         - NOT_ESTIMABLE

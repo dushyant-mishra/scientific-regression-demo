@@ -21,7 +21,7 @@ def analyze(input_file: Path) -> tuple[list[dict], dict]:
             if row["gene"] not in GENES:
                 raise ValueError("unexpected or non-fictional gene symbol")
             study, donor, cell, gene = (row[k] for k in ("study", "donor_id", "cell_id", "gene"))
-            if study not in ("STUDY_A", "STUDY_B") or not donor or not cell:
+            if study not in ("study_a", "study_b") or not donor or not cell:
                 raise ValueError("invalid study, donor, or cell")
             identity = (study, cell, gene)
             if identity in seen:
@@ -42,7 +42,7 @@ def analyze(input_file: Path) -> tuple[list[dict], dict]:
             cells_by_study[study].add(cell)
     if len(seen) != 36:
         raise ValueError("expected exactly 36 illustrative measurement rows")
-    if donor_by_study["STUDY_A"] & donor_by_study["STUDY_B"]:
+    if donor_by_study["study_a"] & donor_by_study["study_b"]:
         raise ValueError("donor identities overlap across studies")
     summary = []
     for (study, gene), ct in sorted(counters.items()):

@@ -14,7 +14,7 @@ tests/test_science_rules.py:15: AssertionError
 ______________ test_02_technical_rows_are_not_independent_donors _______________
 
     def test_02_technical_rows_are_not_independent_donors():
-        x = ["DONOR_01"] * 500 + ["DONOR_02"] * 500
+        x = ["donor_01"] * 500 + ["donor_02"] * 500
 >       assert rules.replication_summary(x) == {"technical_rows": 1000, "biological_n": 2}
 E       AssertionError: assert {'biological_...l_rows': 1000} == {'biological_...l_rows': 1000}
 E         
@@ -35,7 +35,7 @@ tests/test_science_rules.py:20: AssertionError
 ________________ test_03_insufficient_second_study_cannot_pass _________________
 
     def test_03_insufficient_second_study_cannot_pass():
->       assert rules.evidence_verdict({"STUDY_A": "PASS", "STUDY_B": "NOT_ESTIMABLE"}) == "NOT_ESTIMABLE"
+>       assert rules.evidence_verdict({"study_a": "PASS", "study_b": "NOT_ESTIMABLE"}) == "NOT_ESTIMABLE"
 E       AssertionError: assert 'PASS' == 'NOT_ESTIMABLE'
 E         
 E         - NOT_ESTIMABLE
@@ -92,4 +92,4 @@ FAILED tests/test_science_rules.py::test_03_insufficient_second_study_cannot_pas
 FAILED tests/test_science_rules.py::test_07_assay_flag_must_be_a_real_bool - Failed: DID NOT RAISE any of (<class 'TypeError'>, <class 'ValueError'>)
 FAILED tests/test_science_rules.py::test_08_empty_required_study_set_is_invalid - Failed: DID NOT RAISE <class 'ValueError'>
 FAILED tests/test_science_rules.py::test_10_invalid_count_is_rejected - Failed: DID NOT RAISE any of (<class 'TypeError'>, <class 'ValueError'>)
-6 failed, 4 passed in 0.07s
+6 failed, 4 passed in 0.06s
