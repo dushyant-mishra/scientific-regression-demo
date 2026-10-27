@@ -120,16 +120,16 @@ def chart_replicates():
     xx=[0,1]
     yy=[result["technical_rows"],result["biological_n"]]
     ax.bar(xx,yy,color=[COLORS["blue"],COLORS["green"]],width=.57)
-    ax.set_xticks(xx,["Resampled rows", "Independent donors"],fontsize=11)
+    ax.set_xticks(xx,["Repeated row labels", "Distinct donor IDs"],fontsize=11)
     for x,v in zip(xx,yy): ax.text(x,v+25,f"{v:,}",ha="center",fontsize=14,weight="bold",color=COLORS["ink"])
     ax.set_ylim(0,max(yy)*1.18)
     ax.set_ylabel("Count",color=COLORS["ink"])
-    ax.set_title("1,000 computational rows ≠ 1,000 donors",fontsize=18,weight="bold",loc="left",pad=20,color=COLORS["ink"])
-    fig.text(.16,.89,"Two donors; 500 computational draws per donor",color=COLORS["sub"],fontsize=10.5)
+    ax.set_title("1,000 rows ≠ 1,000 donor IDs",fontsize=18,weight="bold",loc="left",pad=20,color=COLORS["ink"])
+    fig.text(.16,.89,"Two donor IDs, each repeated in 500 rows",color=COLORS["sub"],fontsize=10.5)
     for spine in ax.spines.values():spine.set_visible(False)
     ax.grid(axis="y",alpha=.13)
     ax.set_axisbelow(True)
-    save(fig,"figure_4_donor_units_v2")
+    save(fig,"figure_4_donor_units_v3")
 
 
 def main():
