@@ -45,10 +45,10 @@ python make_figures.py
 
 Start with `try_examples.py`: it prints the three scientific rules in action without needing to understand pytest. `generate_fictional_data.py` recreates the CSV. `analyze_fictional_rna.py` classifies each record as detected, measured zero, or unmeasured. `pytest` checks the rules. `run_demo.py` runs **the same tests twice**: first against deliberately broken code, then against the repair. `make_figures.py` rebuilds the charts from the saved CSV and actual test reports.
 
-For the version prepared with this article, the local results were:
+At the audited GitHub revision [`540143a`](https://github.com/dushyant-mishra/scientific-regression-demo/commit/540143af6b49c1177d2de99aba0d0e9768a10ce2) (27 October 2026), the [hosted workflow](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40537406640) reproduced the examples and reported:
 
 ```text
-Full repository suite: 22 passed
+Full repository suite: 24 passed
 Deliberately broken code: 4 passed, 6 failed
 Repaired code: 10 passed, 0 failed
 ```
