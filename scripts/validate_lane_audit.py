@@ -8,6 +8,10 @@ from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# The frozen historical manifest retains the article's original Git blob SHA,
+# but publication writing now lives outside the runnable analysis repository.
+HISTORICAL_GIT_ONLY = {"MEDIUM_ARTICLE.md"}
+
 
 def _sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -42,7 +46,8 @@ def validate(root=ROOT):
     for path, fact in manifest["baseline_artifacts"].items():
         assert not Path(path).is_absolute() and ".." not in Path(path).parts, path
         assert re.fullmatch(r"[0-9a-f]{40}", fact["git_blob"]), path
-        assert (root / path).is_file(), f"Missing tracked historical path: {path}"
+        if path not in HISTORICAL_GIT_ONLY:
+            assert (root / path).is_file(), f"Missing tracked historical path: {path}"
     prs = manifest["prs"]
     assert [r["pr"] for r in prs] == list(range(1, 7))
     for r in prs:
@@ -75,10 +80,12 @@ def validate(root=ROOT):
                  "figure_3_regression_workflow_v2", "figure_4_donor_units_v2"):
         assert (root / "figures" / (name + ".png")).is_file()
         assert (root / "figures" / (name + ".svg")).is_file()
-    for name in ("README.md", "MEDIUM_ARTICLE.md"):
-        body = (root / name).read_text()
-        assert "6 donors" in body and "two-donor" in body
-        assert "figure_1_rna_measurements_v2.png" in body
+    # Validate the active public scientific entrypoint, not an off-repository
+    # Medium manuscript. The immutable baseline manifest remains unchanged.
+    body = (root / "README.md").read_text()
+    assert "6 donors" in body and "two-donor" in body
+    assert "figure_1_rna_measurements_v2.png" in body
+    assert (root / "docs/RESULTS_AND_INTERPRETATION.md").is_file()
     return {"prs": len(prs), "defects": len(defects), "rows": len(rows), "baseline_paths": len(manifest["baseline_artifacts"])}
 
 
