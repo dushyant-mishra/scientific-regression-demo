@@ -74,13 +74,6 @@ python make_figures.py
 
 Inspect the regenerated summary at `outputs/fictional_summary.csv`, metadata at `outputs/analysis_summary.json`, the JSON/JUnit test receipts under `outputs/`, and the plots under `figures/`. The image-generation methods and each graphic's interpretation are in [Figures and methods](FIGURES_AND_METHODS.md).
 
-Optional full-resolution illustrated graphics:
-
-```bash
-python -m pip install -r requirements-editorial.txt
-python make_editorial_figures.py
-```
-
 These commands operate on the **fixed teaching fixture** and write to tracked local output paths. Reproducing them does not require real patient data or a cloud service; only installing dependencies requires package access. To adapt the idea to actual cohorts, define new scientifically valid rules, schemas, unit-of-analysis assumptions, control examples, and tests. The fixed 36-row reader is not a general-purpose RNA analysis pipeline.
 
 ## Limits and provenance
