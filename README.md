@@ -29,7 +29,7 @@ The second row is a **measured zero**: the assay looked for RNA from `gene_2` an
 
 ## Try it on your computer
 
-**First time using Python or GitHub?** Start with [Start here and the one-test RED/GREEN exercise in the article](MEDIUM_ARTICLE.md#start-here-if-this-is-your-first-python-tutorial). You can download a ZIP and run locally without Git, then follow the optional browser-only fork instructions to see CI catch a deliberate error.
+**First time using Python or GitHub?** Start with the [step-by-step beginner exercise](docs/tutorial/FIRST_TEST_WALKTHROUGH.md). It shows how to run a single test, make it fail on purpose, repair it, and optionally watch GitHub Actions catch the error in your own fork. The [short article](MEDIUM_ARTICLE.md) explains why this matters scientifically.
 
 You need Python 3.11 or later and Git. In a terminal:
 
@@ -47,15 +47,15 @@ python make_figures.py
 
 Start with `try_examples.py`: it prints the three scientific rules in action without needing to understand pytest. `generate_fictional_data.py` recreates the CSV. `analyze_fictional_rna.py` classifies each record as detected, measured zero, or unmeasured. `pytest` checks the rules. `run_demo.py` runs **the same tests twice**: first against deliberately broken code, then against the repair. `make_figures.py` rebuilds the charts from the saved CSV and actual test reports.
 
-At the audited GitHub revision [`75ecd86`](https://github.com/dushyant-mishra/scientific-regression-demo/commit/75ecd86cec470843b5352f80ef1a67d92f89eba3) (27 October 2026), the [hosted workflow](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40553329081) reproduced the examples and reported:
+At the audited GitHub revision [`7483d44`](https://github.com/dushyant-mishra/scientific-regression-demo/commit/7483d44556a0ec7a7e5aad1e576240f2663659ca) (27 October 2026), the [hosted workflow](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40559492066) reproduced the examples and reported:
 
 ```text
-Full repository suite: 25 passed
+Full repository suite: 26 passed
 Deliberately broken code: 4 passed, 6 failed
 Repaired code: 10 passed, 0 failed
 ```
 
-Those numbers are recorded test results, not biological findings. The 25-test total includes a reader check that each cell's gene rows agree on their donor ID. Test totals may change if tests are added or edited. The chart reads the saved pytest/JUnit reports instead of assuming those numbers.
+Those numbers are recorded test results, not biological findings. The 26-test total includes a reader check that each cell's gene rows agree on their donor ID and a figure-label integrity check. Test totals may change if tests are added or edited. The chart reads the saved pytest/JUnit reports instead of assuming those numbers.
 
 ![Actual RED and GREEN test results](figures/figure_2_test_results_v2.png)
 
