@@ -84,6 +84,19 @@ The other scripts read the CSV, record test results, and build the figures. You 
 - [`outputs/`](outputs) and [`figures/`](figures) — the local run receipts and plots (PNG and SVG).
 - [`run_demo.py`](run_demo.py) — produces the RED/GREEN reports without changing your source files.
 
+## Regenerate the illustrated publication graphics
+
+The Medium article now uses **portrait-first editorial figures** for the RNA zero-versus-unassayed comparison and the intentional RED/GREEN test results. Separate landscape PNGs and editable SVG masters are retained in [figures](figures). These images are built from the **actual fictional CSV and recorded test results**, not manually typed plotting numbers.
+
+To rebuild the illustrated figures, install the optional renderer and run:
+
+```bash
+python -m pip install -r requirements-editorial.txt
+python make_editorial_figures.py
+```
+
+The default beginner walkthrough does not require these additional packages. The hosted CI installs them and verifies the data, text contrast, large PNG exports, accessible SVG descriptions, and mobile typography. See the [publication figure audit](docs/publication/EDITORIAL_GRAPHICS_QA_20261027.md).
+
 ## Using and citing the example
 
 You're welcome to clone, fork and adapt the code under the [MIT license](LICENSE). If you use it in teaching or writing, please cite the repository. GitHub's **Cite this repository** menu reads [`CITATION.cff`](CITATION.cff). For reproducibility, add the commit SHA you actually used:
