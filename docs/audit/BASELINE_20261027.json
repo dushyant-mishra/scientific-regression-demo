@@ -1,0 +1,223 @@
+{
+  "schema": "scientific-regression-audit/v1",
+  "date": "2026-10-27",
+  "repository": "dushyant-mishra/scientific-regression-demo",
+  "frozen_baseline_commit": "1c5c52fd9ca61c6314ce35143db1a02431f40d27",
+  "baseline_tree_sha": "9a9c19622c0c4db04bed3d0825b8ba57314bc9f0",
+  "nature": "HISTORICAL_SNAPSHOT_NOT_CURRENT_VERDICT",
+  "baseline_artifacts": {
+    ".github/workflows/scientific-regressions.yml": {
+      "git_blob": "e173fa228df22b706c05b5a921383daee09a4029",
+      "bytes": 1225
+    },
+    "CITATION.cff": {
+      "git_blob": "01a84f7a82425ed78259343d49c760d388aca3f9",
+      "bytes": 633
+    },
+    "LICENSE": {
+      "git_blob": "89c5906fbfedc0fdf1957cd9eff0bb2af421991a",
+      "bytes": 1072
+    },
+    "MEDIUM_ARTICLE.md": {
+      "git_blob": "35a874fbe22ea7fe0ab528e3226215048615cc99",
+      "bytes": 20176
+    },
+    "README.md": {
+      "git_blob": "6553db7be022785642bbc096fb4b8d8b54c51be6",
+      "bytes": 5926
+    },
+    "analyze_fictional_rna.py": {
+      "git_blob": "4c87cb2f50bc28c0e131f14a95c6dfaa62ccda68",
+      "bytes": 3744
+    },
+    "data/fictional_rna_observations.csv": {
+      "git_blob": "2a1b33f91b7ff1dc8307ce005590cc7110ecce30",
+      "bytes": 1450
+    },
+    "figures/figure_1_rna_measurements_v2.png": {
+      "git_blob": "8eb57f22c41c9ff939f9f4355d0baa8821fd0966",
+      "bytes": 90686
+    },
+    "figures/figure_1_rna_measurements_v2.svg": {
+      "git_blob": "d6c003e539b9c0b383190c51e3d9d60088d9bcfc",
+      "bytes": 60372
+    },
+    "figures/figure_2_test_results_v2.png": {
+      "git_blob": "03806a335876ed5f74eb492e4b4329b16f3ff234",
+      "bytes": 83284
+    },
+    "figures/figure_2_test_results_v2.svg": {
+      "git_blob": "defdde4db5645fbb35894570a874bd5516aba20d",
+      "bytes": 51271
+    },
+    "figures/figure_3_regression_workflow_v2.png": {
+      "git_blob": "47f9aebdbf9b9520324100527e88cc06ddc09f70",
+      "bytes": 151240
+    },
+    "figures/figure_3_regression_workflow_v2.svg": {
+      "git_blob": "66fba23b0275b7e9cd433d98a1e3149c9894aa22",
+      "bytes": 62248
+    },
+    "figures/figure_4_donor_units_v2.png": {
+      "git_blob": "4c31b01ea0c6a438a51af0d116dd36ad28394a0a",
+      "bytes": 68017
+    },
+    "figures/figure_4_donor_units_v2.svg": {
+      "git_blob": "ac94724c49dd4bbeb900d09a9f67c3c2b511d378",
+      "bytes": 36913
+    },
+    "generate_fictional_data.py": {
+      "git_blob": "e26ca06a913fb8cc054ae51daef96e06e436ab7b",
+      "bytes": 2220
+    },
+    "junit_results.py": {
+      "git_blob": "21df4250fce274c9b00fa528c051b9c1ddff932e",
+      "bytes": 1002
+    },
+    "make_figures.py": {
+      "git_blob": "98e415298b4d26c6282153059e2856c757a75626",
+      "bytes": 7172
+    },
+    "outputs/analysis_summary.json": {
+      "git_blob": "ce093cb55ff6d9cee83a704cdf5ac383b332932d",
+      "bytes": 209
+    },
+    "outputs/fictional_summary.csv": {
+      "git_blob": "a02fe936f66bce904a0907be06e6f4d94650c40b",
+      "bytes": 180
+    },
+    "outputs/green_pytest.xml": {
+      "git_blob": "c6ac07f4864c70631ae245b0083f88352ebb523f",
+      "bytes": 1351
+    },
+    "outputs/green_run.txt": {
+      "git_blob": "fe272edaf62380aa1d4aceaeb1c09dfd9d3d5c09",
+      "bytes": 99
+    },
+    "outputs/red_pytest.xml": {
+      "git_blob": "7e19ff05631ffe99b7a054800c056f5c5e6af2ae",
+      "bytes": 4848
+    },
+    "outputs/red_run.txt": {
+      "git_blob": "64e658df0e8eb3c5e8496b71f96f915191c3e201",
+      "bytes": 4379
+    },
+    "outputs/results.json": {
+      "git_blob": "027b9426d30f8e6cb3f5eaf62fefa481ddcc5da4",
+      "bytes": 725
+    },
+    "requirements.txt": {
+      "git_blob": "140849cd78e4ea9d7140fcea38a43861e8c98055",
+      "bytes": 35
+    },
+    "run_demo.py": {
+      "git_blob": "5c9b7c5069022901d752b0ec6c846720f5ae0464",
+      "bytes": 2313
+    },
+    "science_rules.py": {
+      "git_blob": "ef51d2bd769fe2806b5d72a998b5a2ab0cbb5357",
+      "bytes": 3080
+    },
+    "science_rules_buggy.py": {
+      "git_blob": "e4450417348756f4ab8a6542f44d260b167d87a2",
+      "bytes": 813
+    },
+    "tests/test_beginner_walkthrough.py": {
+      "git_blob": "2be6f31f5c3711fe2878a02b4a5bb35c6e88ec83",
+      "bytes": 414
+    },
+    "tests/test_data_integration.py": {
+      "git_blob": "ef042e27a75f2c963dfe74b9901a7e787a40647c",
+      "bytes": 1978
+    },
+    "tests/test_figure_integrity.py": {
+      "git_blob": "ae49282a4ad841a9500d7d5cf351f62d941145ff",
+      "bytes": 2124
+    },
+    "tests/test_reporting_integrity.py": {
+      "git_blob": "54d51078ae5784fbaf71d33db3137dd3288a8f99",
+      "bytes": 1653
+    },
+    "tests/test_science_rules.py": {
+      "git_blob": "9a17851cfd07bb99b91410e6ea8020440a794734",
+      "bytes": 1793
+    },
+    "try_examples.py": {
+      "git_blob": "0e66a72fd49d387cfe9dd19f1c15ae9ffdcd5227",
+      "bytes": 894
+    }
+  },
+  "prs": [
+    {
+      "pr": 1,
+      "head_sha": "41312f9502cc79693da697345d64c943980fa3c9",
+      "workflow_run": 40390858772,
+      "conclusion": "success",
+      "url": "https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40390858772"
+    },
+    {
+      "pr": 2,
+      "head_sha": "da746a14281a9a17d286ee34b48fcb2cc09e382f",
+      "workflow_run": 40392934048,
+      "conclusion": "success",
+      "url": "https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40392934048"
+    },
+    {
+      "pr": 3,
+      "head_sha": "7cc66097ea199488c2bb8ad14db2f8e81dbe1eb4",
+      "workflow_run": 40393565230,
+      "conclusion": "success",
+      "url": "https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40393565230"
+    },
+    {
+      "pr": 4,
+      "head_sha": "df95c041a3e9f4de6309255dee50e558e54c4f17",
+      "workflow_run": 40395501857,
+      "conclusion": "success",
+      "url": "https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40395501857"
+    },
+    {
+      "pr": 5,
+      "head_sha": "26354d7c6560e2cac616290623e3e7bda6f8b982",
+      "workflow_run": 40396331791,
+      "conclusion": "success",
+      "url": "https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40396331791"
+    },
+    {
+      "pr": 6,
+      "head_sha": "51315c7365e4c80b9008cf86f5504711a75202f4",
+      "workflow_run": 40397918856,
+      "conclusion": "success",
+      "url": "https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40397918856"
+    }
+  ],
+  "baseline_metrics": {
+    "rna_donors": 6,
+    "rna_cells": 12,
+    "gene_cell_rows": 36,
+    "genes": [
+      "gene_1",
+      "gene_2",
+      "gene_3"
+    ],
+    "study_b_gene_3_unassayed_rows": 6,
+    "pytest_full_suite": 22,
+    "red": {
+      "passed": 4,
+      "failed": 6,
+      "errors": 0,
+      "total": 10
+    },
+    "green": {
+      "passed": 10,
+      "failed": 0,
+      "errors": 0,
+      "total": 10
+    }
+  },
+  "historical_extra_files_not_in_repo": [
+    "scientific_regression_github_demo.zip",
+    "scientific_regression_medium_article_kit.zip"
+  ],
+  "scientific_authority": "EDUCATIONAL_SOFTWARE_RULES_ONLY"
+}

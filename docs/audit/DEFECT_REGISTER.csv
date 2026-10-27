@@ -1,0 +1,14 @@
+id,phase,issue,disposition,repair_evidence,do_not_repeat
+H01,pre-repository,Hard-coded RED/GREEN report and bars,REPAIRED_BEFORE_PR1,PRE_REPO_NEGATIVE.md and PR1 JUnit code,Do not attribute old bug to current main
+H02,pre-repository,Mutation produced actual 4 failed 2 passed while old chart still 3 failed 3 passed,PRESERVED_NEGATIVE,PRE_REPO_NEGATIVE.md,Do not use old charts as raw evidence
+H03,pre-repository,Displayed article and downloadable kit out of sync,REPAIRED,PR1 canonical MEDIUM_ARTICLE.md,Do not publish mismatched copies
+H04,pre-repository,Invalid assay flags and empty required sources were accepted,REPAIRED,PR1 behavior tests and science_rules.py,Keep adversarial tests
+H05,pre-repository,FAIL versus missing precedence unspecified,CLASSIFIED_AND_DEFINED,PR1 evidence_verdict chosen policy,Do not misrepresent as meta-analysis
+H06,PR2,FIC names artificial and IDs inconsistent,REPAIRED,PR2 and tests/test_data_integration.py,Use gene_1 cell_01 donor_01 labels
+H07,PR3,Repeated disclaimers read robotically,REPAIRED,PR3 text,One concise teaching-data note
+H08,PR4,Figure labels titles links or image cache stale,REPAIRED,PR4 new PNG/SVG names and tests/test_figure_integrity.py,Inspect every regenerated figure
+H09,PR5,LLM editing anecdotes distracted from actual workflow,REPAIRED,PR5 article,Do not revive editorial self-reference
+H10,PR6,Article code snippets were difficult to follow,REPAIRED,PR6 try_examples.py and simplified walkthrough,Keep runnable examples consistent
+H11,PR6,6 donor RNA CSV mistaken for 2 donor example,REPAIRED,PR6 explicit separation,Do not conflate sample units
+H12,all,CI mistaken for biological qualification,ACTIVE_GUARDRAIL,README and article,Report exact evidence not scientific conclusions
+H13,all,Source/citation and DOI provenance overstated,ACTIVE_GUARDRAIL,CITATION.cff and Git commit references,No DOI until registered

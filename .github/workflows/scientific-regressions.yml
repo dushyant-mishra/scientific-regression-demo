@@ -28,6 +28,8 @@ jobs:
           python analyze_fictional_rna.py
       - name: Run all regression and reporting tests
         run: python -m pytest -q
+      - name: Validate historical audit custody
+        run: python scripts/validate_lane_audit.py
       - name: Reproduce deliberate RED and repaired GREEN runs
         run: python run_demo.py
       - name: Rebuild figures from actual output files
