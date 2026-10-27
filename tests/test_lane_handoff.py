@@ -19,10 +19,12 @@ def test_handoff_custody_and_entrypoints():
         "docs/handoff/PUBLICATION_CHECKLIST.md",
         "docs/handoff/SUCCESSOR_AGENT_INSTRUCTIONS.md",
         "docs/audit/README.md", "docs/audit/BASELINE_20261027.json",
-        "docs/audit/DEFECT_REGISTER.csv", "MEDIUM_ARTICLE.md", "CITATION.cff",
+        "docs/audit/DEFECT_REGISTER.csv", "docs/RESULTS_AND_INTERPRETATION.md",
+        "docs/FIGURES_AND_METHODS.md", "CITATION.cff",
         "try_examples.py", "outputs/results.json",
     ):
         assert (ROOT / path).is_file(), path
     readme = (ROOT / "README.md").read_text()
     assert "docs/audit/README.md" in readme
-    assert "docs/handoff/README.md" in readme
+    assert "docs/RESULTS_AND_INTERPRETATION.md" in readme
+    assert "data/fictional_rna_observations.csv" in readme
