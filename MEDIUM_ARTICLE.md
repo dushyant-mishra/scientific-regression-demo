@@ -14,7 +14,7 @@ A **measured zero** means the assay was performed and detected no transcripts in
 
 This is the distinction I want to protect—not just for today's script, but whenever someone edits it later.
 
-## One gene, three kinds of evidence
+## What does a zero actually mean?
 
 Consider this small example from a teaching dataset. The gene names and counts are invented, but the data-handling problem is common.
 
@@ -110,7 +110,7 @@ All three examples follow the same pattern: write down the scientific meaning th
 
 You don't have to understand the whole repository to try the central idea. Start with the [hands-on walkthrough](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/docs/tutorial/FIRST_TEST_WALKTHROUGH.md). It shows how to download the project, run a single test, introduce the wrong classification on purpose, and restore the correct answer. A separate optional exercise shows how the same mistake appears in GitHub Actions on your own fork.
 
-The [full project](https://github.com/dushyant-mishra/scientific-regression-demo) includes the example RNA table, the correct and deliberately incorrect functions, the unchanged comparison tests, and the scripts that generate these figures. In the audited run on [27 October 2026](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40559492066), the full repository suite passed 26 tests; the separate ten-test demonstration produced six expected failures before repair and none afterward. Those are software-test results, not biological findings.
+The [full project](https://github.com/dushyant-mishra/scientific-regression-demo) includes the example data, the correct and deliberately incorrect code, the unchanged comparison tests, and the scripts that produced the figures. You can inspect the [GitHub Actions test record](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40559492066) or reproduce the results yourself.
 
 The materials are available under an [MIT license](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/LICENSE). If you reuse them, cite the repository at the commit you used; its [citation file](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/CITATION.cff) gives the software attribution.
 
