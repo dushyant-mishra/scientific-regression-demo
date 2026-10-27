@@ -28,9 +28,9 @@ The first two rows concern the **same gene**. Study A detected RNA for `gene_3`;
 
 The complete example has **6 donors** and twelve cells. Study B never assays `gene_3`, so its six entries for that gene should stay *unmeasured*. The rest of the cells let us see positive counts and measured zeros side by side.
 
-![RNA measurement matrix showing detected counts, measured zeros and unassayed genes](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_1_rna_measurements_v2.png)
+![Illustrated same-gene comparison: study A assays gene_3 and detects RNA, study B never assays gene_3, while gene_2 supplies a separate real measured zero](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/editorial_01_rna_evidence_mobile_v1.png)
 
-*Figure 1. Plus signs mark detected RNA; 0 means assayed but not detected; dashes mean the gene was not assayed. The figure comes from the included teaching dataset.*
+*Figure 1. Two studies, the same gene, different evidence. Study A's `gene_3` count is 4; Study B never assayed it. The `gene_2` count of 0 is a separate, real measured zero. All labels are generated from the fictional CSV. See the [full twelve-cell RNA measurement matrix](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_1_rna_measurements_v2.png) for the underlying observations.*
 
 It's easy to say, "Of course missing is not zero." The harder question is: **how do we make the software remember that distinction?**
 
@@ -72,9 +72,9 @@ The difference is plain: **Expected: `UNMEASURED`. Got: `MEASURED_ZERO`.** Our s
 
 The [example repository](https://github.com/dushyant-mishra/scientific-regression-demo) preserves an intentionally defective implementation alongside the corrected one. It runs **the same ten behavior tests** against each version, without changing the expected answers.
 
-![Test outcomes from the deliberately defective and corrected implementations](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_2_test_results_v2.png)
+![Colorful test tiles: four passes and six failures for the deliberately broken implementation; all ten tests pass after repair](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/editorial_02_test_tripwire_mobile_v1.png)
 
-*Figure 2. In the deliberately defective version, six of ten tests fail. In the corrected version, all ten pass. The ten tests cover three data-handling rules, not just the zero-versus-unmeasured example.*
+*Figure 2. Each tile represents one executed software test. Six of ten fail against the intentionally defective implementation; the same ten all pass against the corrected one. The tile order illustrates aggregate counts, not individual test identities. Numbers are read from the recorded RED/GREEN result file; these are software outcomes, not biological findings.*
 
 The failures are a feature of this demonstration. A test that stays green even when we insert the very mistake it is supposed to detect would not give us much confidence.
 
