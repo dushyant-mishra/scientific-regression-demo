@@ -15,6 +15,8 @@
 
 **Pass 4 — Human reading rhythm / premature technical overload.** Reassessed paragraph lengths, section purpose, links, code quantity, and scientific disclaimers. Removed the full-suite test arithmetic from the Medium story while keeping a link to the hosted evidence, leaving operational counts in the README and beginner guide. Retitled the opening section as an intelligible biological question. The article now contains one concrete measurement table, two minimal code snippets, three data-grounded figures, and a short invitation to the independent walkthrough. No terminal setup is required to *read* the article.
 
+**Pass 5 — Historical custody integration.** The first full hosted CI run of the proposed PR returned **25 passed / 1 failed** because the frozen historical validator expects the literal strings `6 donors` and `two-donor` in the canonical article. The rewrite had accurately spelled out those concepts differently, so the check failed on text compatibility rather than RNA science. Preserved the existing historical validator unchanged and restored both accurate phrases naturally in the story. This correction must be verified by a fresh exact-head successful CI before merge.
+
 ## Publication and scientific constraints
 
 - The three teaching examples remain separate: the six-donor RNA CSV; the two-donor-ID/1,000-constructed-row illustration; and the exercise with manually assigned `PASS`/`NOT_ESTIMABLE` labels.
