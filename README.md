@@ -29,7 +29,7 @@ The second row is a **measured zero**: the assay looked for RNA from `gene_2` an
 
 ## Try it on your computer
 
-**First time using Python or GitHub?** Start with [Start here and the one-test RED/GREEN exercise in the article](MEDIUM_ARTICLE.md#start-here-if-this-is-your-first-python-tutorial). You can download a ZIP and run locally without Git, then follow the optional browser-only fork instructions to see CI catch a deliberate error.
+**First time using Python or GitHub?** Start with the [step-by-step beginner exercise](docs/tutorial/FIRST_TEST_WALKTHROUGH.md). It shows how to run a single test, make it fail on purpose, repair it, and optionally watch GitHub Actions catch the error in your own fork. The [short article](MEDIUM_ARTICLE.md) explains why this matters scientifically.
 
 You need Python 3.11 or later and Git. In a terminal:
 
