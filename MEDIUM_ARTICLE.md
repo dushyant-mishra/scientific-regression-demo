@@ -16,6 +16,24 @@ This tutorial shows how to catch them using **regression tests**: short programs
 
 > **About the data:** This is a made-up teaching dataset. `gene_1`, `gene_2`, and `gene_3` are placeholder names, and none of the measurements comes from a real study.
 
+### Start here if this is your first Python tutorial
+
+You need **Python 3.11 or newer** and a place to type commands. On Windows, use *PowerShell*; on macOS or Linux, use *Terminal*. Check Python with `python --version`. If that command is not recognized, try `py --version` on Windows or `python3 --version` on macOS/Linux, and use that same command name in the examples below.
+
+Get the tutorial files in either of two ways:
+
+- **Without Git:** Open the [repository](https://github.com/dushyant-mishra/scientific-regression-demo), select **Code → Download ZIP**, and extract the ZIP. Open a terminal **inside the extracted `scientific-regression-demo` folder**. On Windows, you can open the folder in File Explorer, type `powershell` in its address bar, and press Enter. On macOS, open Terminal and type `cd ` followed by dragging the extracted folder into the Terminal window, then press Enter.
+- **With Git already installed:** Run `git clone https://github.com/dushyant-mishra/scientific-regression-demo.git`, followed by `cd scientific-regression-demo`.
+
+With the terminal in the project folder, run:
+
+```bash
+python -m pip install -r requirements.txt
+python try_examples.py
+```
+
+The first command installs the two Python packages this example needs; the second prints three worked examples. If you get **"No such file or directory: try_examples.py"**, the terminal is in the wrong folder. If your computer uses `py` or `python3`, substitute that for `python` in both commands. You do not need a GitHub account to run these examples locally.
+
 ## 1. The RNA experiment
 
 Our main RNA dataset contains two studies with three donors each. Every donor contributes two cells, and each cell has three gene entries. That gives **6 donors, 12 cells, and 36 gene-by-cell records**.
@@ -69,7 +87,7 @@ None of these rules determines whether a gene is differentially expressed. They 
 
 ## 3. Follow the code, one rule at a time
 
-Before looking at the tests, try the three examples from the repository:
+Before looking at the tests, run the three examples from the repository (after completing **Start here** above):
 
 ```bash
 python try_examples.py
@@ -130,7 +148,7 @@ Here, `len(donor_ids)` counts all supplied rows. `set(donor_ids)` keeps each don
 
 ### Rule C — Missing evidence cannot turn into a PASS
 
-The third function, `evidence_verdict()`, uses this decision order:
+The third function, `evidence_verdict()`, receives **labels that we assign for this teaching example**—`PASS`, `FAIL`, and `NOT_ESTIMABLE`. These labels are not calculated from the RNA counts above and do not represent results of a statistical test. We deliberately choose the following software decision order:
 
 ```text
 If a required study has a known FAIL → FAIL
@@ -173,11 +191,11 @@ def test_technical_rows_are_not_independent_donors():
     assert result == {"technical_rows": 1000, "biological_n": 2}
 ```
 
-This **separate two-donor example** constructs 500 entries labeled `donor_01` and 500 labeled `donor_02`. It does not generate new biological measurements or actually perform resampling. It illustrates how counting repeated rows as independent donors would be wrong; it does not describe the six-donor RNA CSV.
+This **separate two-donor example** constructs 500 entries labeled `donor_01` and 500 labeled `donor_02`. It does not generate new biological measurements or actually perform resampling. The output reports **two distinct donor IDs**, not a statistical demonstration that these donors are independent. It does not describe the six-donor RNA CSV.
 
-![Donor accounting contrasts 1000 computational rows with 2 independent donors](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_4_donor_units_v2.png)
+![A chart contrasts 1,000 repeated row labels with two distinct donor identifiers](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_4_donor_units_v3.png)
 
-*Figure 2. A separate two-donor demonstration: 1,000 repeated row labels correspond to two distinct donors, not to 1,000 independent biological replicates.*
+*Figure 2. A separate example: 1,000 constructed row labels contain only two distinct donor identifiers. The chart counts identifiers; it does not establish biological independence.*
 
 For cross-study evidence:
 
@@ -189,6 +207,31 @@ def test_insufficient_second_study_cannot_pass():
 ```
 
 The repository's actual test file has a small import switch so the *same ten tests* can run against either the buggy or corrected implementation. You do not need to change that switch yourself. The complete `tests/test_science_rules.py` includes ten behavior tests, including edge cases discovered during independent review: invalid assay flags, an empty required-study list, and a known failed study alongside absent evidence.
+
+### Try writing and breaking one test yourself
+
+You do not need to understand the full test suite to try this. In the project folder, open a plain-text code editor (for example, VS Code or another editor), make a file named **`tests/test_my_first_rule.py`**, and paste this complete test:
+
+```python
+from science_rules import observation_state
+
+
+def test_unassayed_gene_is_not_a_measured_zero():
+    result = observation_state(measured=False, count=None)
+    assert result == "UNMEASURED"
+```
+
+Run **only your new test**, in the terminal from the project folder:
+
+```bash
+python -m pytest -q tests/test_my_first_rule.py
+```
+
+Expected: **`1 passed`**. The `assert` checks the output we would accept scientifically. The name starting with `test_` is how pytest recognizes it as a test.
+
+Now open **`science_rules.py`** and, inside `observation_state()`, change the single line `return "UNMEASURED"` to `return "MEASURED_ZERO"`. Save the file and run the **same** pytest command. Expected: **`1 failed`**, showing that the test detects the deliberate scientific mistake. Restore `return "UNMEASURED"`, save, and run again: **`1 passed`**. Do not change the test's expected value to make a bad implementation pass.
+
+This experiment is safe in a disposable working copy. If you want to continue with the GitHub exercise below, keep the correct implementation and your new test.
 
 ## 5. Deliberately introduce bugs: RED → GREEN
 
@@ -237,16 +280,16 @@ Local tests tell us whether code passes *here and now*. Repository CI tells us w
 
 ## 7. Reproduce the tutorial on GitHub: step by step
 
-The example project is public at **[scientific-regression-demo](https://github.com/dushyant-mishra/scientific-regression-demo)**. You may clone it and run it as-is, or fork it to experiment with changes.
+The example project is public at **[scientific-regression-demo](https://github.com/dushyant-mishra/scientific-regression-demo)**. You can run it using the **Start here** instructions above without an account. The GitHub steps below are optional practice for seeing automatic checks on your own fork.
 
-**Step 1 — Open or fork the repository.** On GitHub, open the repository and click **Fork** if you want your own copy. Or clone it locally:
+**Step 1 — Open or fork the repository.** On GitHub, open the repository and select **Fork → Create fork** to make your own copy. Do not edit the original project. If you prefer working locally and have Git installed, the equivalent commands to obtain the original files are:
 
 ```bash
 git clone https://github.com/dushyant-mishra/scientific-regression-demo.git
 cd scientific-regression-demo
 ```
 
-**Step 2 — Install dependencies.** Python 3.11 or newer is recommended for this example. In your terminal, run:
+**Step 2 — Install dependencies.** If you have not already completed **Start here**, use Python 3.11 or later and run the following from the repository folder:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -281,13 +324,19 @@ python make_figures.py
 
 The RED run is *supposed to fail its tests*. `run_demo.py` runs both versions without overwriting `science_rules.py`. The saved outputs show which checks failed and which passed.
 
-**Step 6 — Create a change on a branch.** If you forked the repository, create a branch in your copy, change one implementation rule, and push the branch. You can deliberately reintroduce the `not count` defect as an educational exercise, but do not merge broken code into a branch others rely on.
+**Step 6 — Create a practice branch in your fork (browser-only option).** In your fork on GitHub, use the branch selector (initially `main`) to create a branch named `practice/first-science-test`. Stay on that branch. Choose **Add file → Create new file**, name it `tests/test_my_first_rule.py`, and paste the test from **Try writing and breaking one test yourself** above. Choose **Commit changes** and commit to this practice branch, not `main`. If GitHub prompts you to enable Actions for your new fork, enable the repository's workflows.
 
-**Step 7 — Open a pull request.** GitHub's **Actions** tab will show the workflow named *RNA scientific regression checks*. It checks out the submitted revision, installs Python and dependencies, runs tests, reproduces RED/GREEN, and rebuilds the figures. The saved workflow artifacts contain result logs.
+Next, while still on your practice branch, open `science_rules.py`, select its **Edit** (pencil) control, and change the single line `return "UNMEASURED"` to `return "MEASURED_ZERO"`. Commit this deliberately incorrect version to the *same practice branch*. You should see a **failed** workflow run in **Actions → RNA scientific regression checks** because the implementation has violated the rule.
 
-**Step 8 — Review the test result, not just the green icon.** Open the workflow log. Verify the number of tests executed, whether anything was skipped, and whether the scientific rule is actually tested. If your repository supports rulesets/branch protection, you can configure its regression workflow as a required check before merging.
+Restore that line to `return "UNMEASURED"` in the same branch and commit again. The next workflow run should be **green**. Leave the main branch unmodified; never merge the deliberately broken version.
 
-The results discussed earlier were captured from local runs. For hosted results on the current repository revision, check the **Actions** tab and inspect the workflow logs.
+**Step 7 — Optionally open a practice pull request.** GitHub may offer **Compare & pull request** for your branch. If you open one, set the **base repository to your own fork** and **base branch to `main`**—not to the original author's repository. Use your practice branch as the comparison. A pull request is a proposal to merge changes; you can inspect its checks without merging it.
+
+The *RNA scientific regression checks* workflow checks out each submitted revision, installs dependencies, runs the full tests, reproduces the *intentionally expected* RED/GREEN demonstration, and rebuilds figures. A workflow is considered **failed** when the full correct-code test suite fails; the deliberately broken teaching comparator is expected to produce its own six failures inside a successful workflow.
+
+**Step 8 — Read the evidence.** In your fork's **Actions** tab, open the relevant *RNA scientific regression checks* run, select the **tests** job, and expand **Run all regression and reporting tests**. Look for the named failed test in the broken commit, then a passing test on the repaired commit. The deliberately broken comparator still reports its expected RED failures in **Reproduce deliberate RED and repaired GREEN runs**; do not confuse those intentional failures with a failing overall workflow. Check what revision each run tested before trusting a green icon.
+
+The RED/GREEN counts displayed earlier were captured from actual test runs, and the cited hosted workflow provides an independently recorded example. For your own fork, use its **Actions** tab and inspect the run logs. If workflows are disabled in a new fork, GitHub may require you to enable them before the first run.
 
 ## 8. Using an AI coding agent responsibly
 
