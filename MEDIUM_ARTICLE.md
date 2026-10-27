@@ -270,7 +270,7 @@ The first command prints three small worked examples. The next two rebuild `data
 python -m pytest -q
 ```
 
-The version documented in this article has **22 passing tests** in a local run, including the ten behavior tests demonstrated above. Your results may differ if you modify the code or add tests.
+At the audited [27 October 2026 GitHub Actions run](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40537406640), **24 tests passed** on commit [`540143a`](https://github.com/dushyant-mishra/scientific-regression-demo/commit/540143af6b49c1177d2de99aba0d0e9768a10ce2). Ten are the behavior tests used in the RED/GREEN demonstration; the rest check the dataset, reporting, figures, and audit/handoff records. The total can change as tests are added, so use the command above to check the version you cloned.
 
 **Step 5 — Reproduce the RED/GREEN evidence and figures.**
 
