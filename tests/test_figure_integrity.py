@@ -8,7 +8,7 @@ FIGURES = {
     "figure_1_rna_measurements_v2",
     "figure_2_test_results_v2",
     "figure_3_regression_workflow_v2",
-    "figure_4_donor_units_v2",
+    "figure_4_donor_units_v3",
 }
 
 
@@ -36,6 +36,17 @@ def test_matrix_labels_match_generated_data_and_no_obsolete_gene_names():
     for svg in (ROOT / "figures").glob("*.svg"):
         text = svg.read_text()
         assert not re.search(r"FIC[-_]\w+|A fictional RNA experiment|Two fictional donors", text), svg
+
+
+
+def test_donor_figure_labels_do_not_claim_resampling_or_proven_independence():
+    source = (ROOT / "make_figures.py").read_text()
+    svg = (ROOT / "figures" / "figure_4_donor_units_v3.svg").read_text()
+    for label in ("Repeated row labels", "Distinct donor IDs", "Two donor IDs, each repeated in 500 rows"):
+        assert label in source
+        assert label in svg
+    for misleading in ("Resampled rows", "Independent donors", "computational draws per donor"):
+        assert misleading not in svg
 
 
 def test_readme_and_article_reference_existing_current_figures():
