@@ -1,25 +1,21 @@
-# Figures and reproducible visualization methods
+# Figures: scientific meaning and reproducible generation
 
-The figures in this repository explain the **fictional RNA measurement states and software regression tests**. They are not microscopy, new biological measurements, or statistical evidence of expression differences.
+The figures in this repository illustrate **RNA measurement semantics, software-test outcomes, donor-ID accounting, and the regression-testing workflow**. They use fictional input data; they are not microscopy images, statistical estimates of biological effects, or findings from a real RNA study.
 
-## What each figure means
+## Figures and their source data
 
-| Graphic | Source | Interpretation |
+| Figure | Data source | Scientific interpretation |
 | --- | --- | --- |
-| [RNA measurement matrix](../figures/figure_1_rna_measurements_v2.png) | `data/fictional_rna_observations.csv` | Per-cell `+` means detected, `0` means assayed with no transcripts detected, and `—` means not assayed. Study B lacks measurements of `gene_3`. |
-| [Illustrated RNA comparison (portrait)](../figures/editorial_01_rna_evidence_mobile_v1.png) | Same fictional CSV | Study A `cell_01/gene_3` was assayed with count 4, while Study B `cell_07/gene_3` was not assayed. Study A `cell_01/gene_2` is a separately identified measured zero. |
-| [RED/GREEN test chart](../figures/figure_2_test_results_v2.png) | `outputs/results.json`, parsed from real JUnit testcase entries | Four tests pass and six fail with intentionally defective rules; the same ten all pass with repaired rules. |
-| [Illustrated test tiles (portrait)](../figures/editorial_02_test_tripwire_mobile_v1.png) | Same RED/GREEN receipt | Each tile represents one executed behavior test; colors and symbols distinguish passes from failures. Their display order is illustrative and does **not** identify individual test names. |
-| [Donor-identifier illustration](../figures/figure_4_donor_units_v3.png) | Separate constructed row-label list in `make_figures.py` | 1,000 repeated rows contain **two distinct donor identifiers**. This does not establish statistical independence or describe the main six-donor RNA CSV. |
-| [Scientific regression workflow](../figures/figure_3_regression_workflow_v2.png) | Explanatory sequence | Define a scientific rule, make a failing test, repair the code, rerun the test, and protect against future regression in CI. |
+| [RNA measurement matrix](../figures/figure_1_rna_measurements_v2.png) | [Fictional RNA observations](../data/fictional_rna_observations.csv) | A plus sign means RNA detected, `0` means an assay returned zero detected molecules, and a dash means the gene was **not assayed**. Study B never assayed `gene_3`. |
+| [RED/GREEN regression checks](../figures/figure_2_test_results_v2.png) | [Recorded test results](../outputs/results.json) | The deliberately incorrect source fails six of the ten unchanged behavior tests; the repaired source passes all ten. These are software outcomes, not biological effect estimates. |
+| [Scientific regression workflow](../figures/figure_3_regression_workflow_v2.png) | Explanatory steps | A researcher defines the software rule, writes a test capable of detecting a violation, repairs the code, and runs the tests automatically after future changes. |
+| [Distinct donor identifiers](../figures/figure_4_donor_units_v3.png) | Separate constructed donor-label demonstration | There are 1,000 repeated labels and two unique donor IDs. This **does not** establish independence or represent the six-donor RNA table. |
 
-The wide versions of the illustrated RNA and test-tile graphics are also available under `figures/editorial_01_rna_evidence_landscape_v1.*` and `figures/editorial_02_test_tripwire_landscape_v1.*`. Each version has both PNG and SVG outputs.
+The four charts are accompanied by SVG versions in [`figures/`](../figures/), suitable for inspecting their vector labels.
 
-## How the figures are generated
+## Rebuild from the input and test receipts
 
-The conventional charts are made by [`make_figures.py`](../make_figures.py). The more illustrative wide and portrait versions are made by [`make_editorial_figures.py`](../make_editorial_figures.py), which **reads** the fixed CSV and `outputs/results.json` instead of supplying those scientific values manually.
-
-Reproduce the input, classifications, test report, and standard charts:
+From the repository root, with Python 3.11 or newer:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -29,23 +25,12 @@ python run_demo.py
 python make_figures.py
 ```
 
-To build the independently composed portrait and landscape illustrations:
+The generator recreates the same 36-row teaching CSV; the analysis writes [`outputs/fictional_summary.csv`](../outputs/fictional_summary.csv) and [`outputs/analysis_summary.json`](../outputs/analysis_summary.json). `run_demo.py` executes the same ten behavior checks against deliberately incorrect and repaired functions, writes JUnit XML and [`outputs/results.json`](../outputs/results.json); `make_figures.py` uses the CSV and saved reports to build four PNG/SVG pairs.
 
-```bash
-python -m pip install -r requirements-editorial.txt
-python make_editorial_figures.py
-```
+The code uses the fixed example inputs. The [figure-integrity tests](../tests/test_figure_integrity.py) check that the diagrams exist, their dimensions are adequate, and their key labels correspond to the current data. The [GitHub Actions workflow](../.github/workflows/scientific-regressions.yml) reruns the analysis and tests on each code change.
 
-The SVG masters retain text labels, explicit titles, and descriptions; PNGs are generated at high pixel resolutions for easier viewing. The fixed CSV schema and recorded test source limit what each graphic may truthfully display.
+## Scientific boundaries
 
-## What is checked automatically?
+An unassayed gene is **not** an observed RNA zero. Counts of rows are not inherently counts of independent donors. A deliberate RED test run is an educational negative control rather than a failed current analysis. These diagrams do not validate real biological associations, differential expression, causal effects, or experimental power.
 
-The repository's [figure tests](../tests/test_figure_integrity.py) and [illustrated-figure tests](../tests/test_editorial_figure_integrity.py) verify dimensions, linked asset presence, gene labels, raw-data associations, pass/fail values, accessible SVG metadata, mobile lettering floors, and the generator's configured small-text contrast pairs (at least **4.5:1**). A negative fixture mutates an assay flag and verifies that the figure data-reader rejects the inconsistent input.
-
-The [GitHub Actions workflow](../.github/workflows/scientific-regressions.yml) runs image regeneration and integrity checks along with the scientific behavior tests. These mechanical checks are valuable but **cannot prove all layout or scientific interpretation questions**: image legibility still deserves human inspection, and biological assumptions require domain review.
-
-## Historical figures and interpretation boundary
-
-Older figure versions remain in `figures/` where the [historical audit validator](../scripts/validate_lane_audit.py) requires them. Their presence is **provenance**, not a reason to prefer an older graphic or imply that old figures prove a biological result.
-
-All data and reported numerical outcomes here are constructed teaching examples. They do not estimate differential expression, donor independence, statistical significance, or any disease finding. For the numerical data and its scientific meaning, start at [Results and interpretation](RESULTS_AND_INTERPRETATION.md).
+For the computed quantities and bounded interpretations, read [Results and interpretation](RESULTS_AND_INTERPRETATION.md). For a first experiment with regression tests, use the [hands-on guide](tutorial/FIRST_TEST_WALKTHROUGH.md).
