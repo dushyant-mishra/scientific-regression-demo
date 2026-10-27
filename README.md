@@ -90,3 +90,7 @@ You're welcome to clone, fork and adapt the code under the [MIT license](LICENSE
 
 There is no DOI for this project. You can cite the [article](MEDIUM_ARTICLE.md) separately after it is published on Medium.
 
+
+## Maintaining this tutorial
+
+The completed historical reviews are indexed in [the audit](docs/audit/README.md). New contributors and coding agents can start from [the takeover guide](docs/handoff/README.md) rather than repeating old reviews.
