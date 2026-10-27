@@ -111,6 +111,6 @@ The analysis figures are regenerated from the committed CSV and recorded test re
 
 A zero count says **an assay was performed and detected none in that observation**. An unmeasured value says **there is no assay observation**. The distinction matters for downstream analyses, but **no differential expression, disease association, statistical power, causality, or genuine donor independence is estimated here**. The input schema and reader deliberately enforce a fixed 36-row teaching fixture; use the principles and tests as a template rather than applying this script unchanged to a real cohort.
 
-The [short explanatory article](MEDIUM_ARTICLE.md) introduces the intuition. The repository itself is the source for the **data, code, executed results, scientific interpretation, and reproducible figures**.
+The repository is the source for the **data, code, executed results, scientific interpretation, and reproducible figures**. New readers can start with the [hands-on guide](docs/tutorial/FIRST_TEST_WALKTHROUGH.md) or the [results explanation](docs/RESULTS_AND_INTERPRETATION.md).
 
 The code is available under the [MIT license](LICENSE). For reproducibility, cite this repository at **the exact commit used**; see [`CITATION.cff`](CITATION.cff). The separately stored [historical software audit](docs/audit/README.md) is for provenance and does not supersede current code and results.
