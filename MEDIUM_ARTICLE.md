@@ -68,7 +68,7 @@ It looks compact. It is also wrong.
 
 In Python, both `0` and `None` behave as false-like values in that condition. The code never asks whether the gene was assayed. It returns `MEASURED_ZERO` in both cases.
 
-Our second `assert` fails. The test has caught a scientific error that wouldn't necessarily stop the analysis from running.
+The difference is plain: **Expected: `UNMEASURED`. Got: `MEASURED_ZERO`.** Our second `assert` fails. The test has caught a scientific error that wouldn't necessarily stop the analysis from running.
 
 The [example repository](https://github.com/dushyant-mishra/scientific-regression-demo) preserves an intentionally defective implementation alongside the corrected one. It runs **the same ten behavior tests** against each version, without changing the expected answers.
 
@@ -111,6 +111,8 @@ All three examples follow the same pattern: write down the scientific meaning th
 You don't have to understand the whole repository to try the central idea. Start with the [hands-on walkthrough](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/docs/tutorial/FIRST_TEST_WALKTHROUGH.md). It shows how to download the project, run a single test, introduce the wrong classification on purpose, and restore the correct answer. A separate optional exercise shows how the same mistake appears in GitHub Actions on your own fork.
 
 The [full project](https://github.com/dushyant-mishra/scientific-regression-demo) includes the example RNA table, the correct and deliberately incorrect functions, the unchanged comparison tests, and the scripts that generate these figures. In the audited run on [27 October 2026](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40559492066), the full repository suite passed 26 tests; the separate ten-test demonstration produced six expected failures before repair and none afterward. Those are software-test results, not biological findings.
+
+The materials are available under an [MIT license](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/LICENSE). If you reuse them, cite the repository at the commit you used; its [citation file](https://github.com/dushyant-mishra/scientific-regression-demo/blob/main/CITATION.cff) gives the software attribution.
 
 You can also give an AI coding assistant a task like this:
 
