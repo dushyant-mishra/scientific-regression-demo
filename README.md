@@ -1,43 +1,41 @@
-# RNA regression tests: a small example you can run
+# RNA data-handling checks: reproducible Python analysis
 
-[![Tests](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml/badge.svg)](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml)
+[![RNA scientific regression checks](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml/badge.svg)](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml)
 
-A Python script can run without errors and still get the biology wrong. This little project shows how to catch three mistakes before they become part of an analysis:
+This repository contains a **reproducible teaching analysis** showing how a functioning Python program can mishandle RNA measurement semantics. Readers can download the data, run the analysis, inspect the outputs and figures, and check exactly which scientific rules the tests enforce.
 
-- Calling a gene's RNA count **zero** when the gene was **never assayed**.
-- Counting repeated observations as if they came from different donors.
-- Reporting that two studies support a finding when one has too little information to judge it.
+**Scope:** All RNA observations are **fictional**; `gene_1`–`gene_3` are placeholders. This is a validation of software data-handling rules, **not** a differential-expression study, a biological discovery, or an analysis of JEPA research datasets.
 
-This is a teaching dataset: `gene_1`, `gene_2`, and `gene_3` are placeholder names, and the observations were generated for this exercise.
+## The analysis question
 
-## The example
+When combining observations, does the software keep these different states separate?
 
-Our RNA dataset contains two studies, three donors per study, two cells per donor, and three gene entries per cell. That's **6 donors, 12 cells, and 36 gene-by-cell rows** in [the CSV](data/fictional_rna_observations.csv).
+- **Measured and detected:** the gene was assayed and its RNA count was positive.
+- **Measured zero:** the gene was assayed but no RNA was detected in that observation.
+- **Unmeasured:** the gene was not included in the assay, so no count exists.
 
-Later, the donor-counting test uses a **separate two-donor example** with 1,000 repeated row labels. It is not a different count of the donors in this CSV.
+A measured zero cannot be substituted for an unassayed gene. Two further *separate* examples test that repeated row labels do not create extra donor identifiers, and that missing manually assigned study-evidence labels do not silently become a positive verdict.
 
-| Study | Donor | Cell | Gene | Assayed? | RNA count |
-|---|---|---|---|---|---:|
-| study_a | donor_01 | cell_01 | gene_1 | true | 12 |
-| study_a | donor_01 | cell_01 | gene_2 | true | 0 |
-| study_a | donor_01 | cell_01 | gene_3 | true | 4 |
-| study_b | donor_04 | cell_07 | gene_3 | false | *(blank)* |
+## Data and design
 
-The second row is a **measured zero**: the assay looked for RNA from `gene_2` and detected none in that cell. The fourth row is **not a zero**: Study B did not assay `gene_3` at all. That difference matters when combining datasets.
+The [included RNA CSV](data/fictional_rna_observations.csv) has **6 donors**, **12 cells**, **3 genes**, **2 studies**, and **36 gene-by-cell rows**. Each study has three donors and six cells. Study B does not assay `gene_3`.
 
-![RNA measurement table drawn from the CSV](figures/figure_1_rna_measurements_v2.png)
+| Actual included record | Assayed? | Stored count | Correct classification |
+| --- | --- | --- | --- |
+| Study A · cell_01 · gene_3 | Yes | 4 | `MEASURED_DETECTED` |
+| Study A · cell_01 · gene_2 | Yes | 0 | `MEASURED_ZERO` |
+| Study B · cell_07 · gene_3 | No | blank | `UNMEASURED` |
 
-## Try it on your computer
+The **separate two-donor illustration** contains 1,000 repeated row labels representing two distinct donor IDs. It is not part of this CSV, is not an actual resampling experiment, and does not demonstrate statistical independence.
 
-**First time using Python or GitHub?** Start with the [step-by-step beginner exercise](docs/tutorial/FIRST_TEST_WALKTHROUGH.md). It shows how to run a single test, make it fail on purpose, repair it, and optionally watch GitHub Actions catch the error in your own fork. The [short article](MEDIUM_ARTICLE.md) explains why this matters scientifically.
+## Run the analysis
 
-You need Python 3.11 or later and Git. In a terminal:
+Install **Python 3.11 or later**. With Git installed, open a terminal and run:
 
 ```bash
 git clone https://github.com/dushyant-mishra/scientific-regression-demo.git
 cd scientific-regression-demo
 python -m pip install -r requirements.txt
-python try_examples.py
 python generate_fictional_data.py
 python analyze_fictional_rna.py
 python -m pytest -q
@@ -45,67 +43,75 @@ python run_demo.py
 python make_figures.py
 ```
 
-Start with `try_examples.py`: it prints the three scientific rules in action without needing to understand pytest. `generate_fictional_data.py` recreates the CSV. `analyze_fictional_rna.py` classifies each record as detected, measured zero, or unmeasured. `pytest` checks the rules. `run_demo.py` runs **the same tests twice**: first against deliberately broken code, then against the repair. `make_figures.py` rebuilds the charts from the saved CSV and actual test reports.
+No Git installation? Use **Code → Download ZIP** on the repository page, extract the files, open a terminal in the extracted directory, and start with the `python -m pip install` command. On systems where Python is called `py` or `python3`, substitute that for `python`.
 
-At the audited GitHub revision [`7483d44`](https://github.com/dushyant-mishra/scientific-regression-demo/commit/7483d44556a0ec7a7e5aad1e576240f2663659ca) (27 October 2026), the [hosted workflow](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40559492066) reproduced the examples and reported:
+The scripts regenerate the fixed teaching CSV, classify the records, run the main checks, execute an intentional broken-versus-correct comparison, and rebuild the source-linked charts. For a fully guided first exercise, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md).
 
-```text
-Full repository suite: 26 passed
-Deliberately broken code: 4 passed, 6 failed
-Repaired code: 10 passed, 0 failed
+### What the analysis produces
+
+The [actual summary CSV](outputs/fictional_summary.csv) contains:
+
+| Study | Gene | Detected | Measured zero | Unmeasured |
+| --- | --- | ---: | ---: | ---: |
+| Study A | gene_1 | 6 | 0 | 0 |
+| Study A | gene_2 | 3 | 3 | 0 |
+| Study A | gene_3 | 4 | 2 | 0 |
+| Study B | gene_1 | 6 | 0 | 0 |
+| Study B | gene_2 | 3 | 3 | 0 |
+| Study B | gene_3 | 0 | 0 | 6 |
+
+**Interpretation:** Study B contributes **no assay measurements** for `gene_3`. Its six unmeasured entries must not be reported as six observed zeros. The detected/zero totals are properties of the *constructed example*, not estimates of expression differences or biological effects. See [Analysis, results and interpretation](docs/RESULTS_AND_INTERPRETATION.md) for the scientific meaning, other test cases, and limits.
+
+## Verify the software behavior
+
+The main suite checks input validation, cell-to-donor consistency, output integrity, figures, and the stated rules:
+
+```bash
+python -m pytest -q
 ```
 
-Those numbers are recorded test results, not biological findings. The 26-test total includes a reader check that each cell's gene rows agree on their donor ID and a figure-label integrity check. Test totals may change if tests are added or edited. The chart reads the saved pytest/JUnit reports instead of assuming those numbers.
+The deliberately broken and repaired implementations are compared using **the same ten behavior tests**:
 
-![Actual RED and GREEN test results](figures/figure_2_test_results_v2.png)
+```bash
+python run_demo.py
+```
 
-## Why put it on GitHub?
+Expected comparison from the committed [test receipt](outputs/results.json):
 
-You can run everything locally. GitHub is useful because code changes: a collaborator or coding agent might accidentally bring back an old error. The [GitHub Actions workflow](.github/workflows/scientific-regressions.yml) reruns the tests for pushes and pull requests, so reviewers can see **which committed version** passed and read its logs.
+```text
+RED: 4 passed, 6 failed, 0 errors    # deliberately incorrect implementation
+GREEN: 10 passed, 0 failed, 0 errors # repaired implementation
+```
 
-Try it yourself: fork the repository, make a new branch, change the correct function in `science_rules.py` to treat `None` as zero, and open a pull request. The tests should fail. Restore the correct function, push again, and watch them pass. Don't merge the broken change.
+The RED failures are **intentional**. `run_demo.py` reports them while itself finishing successfully. The full main-suite count may increase as tests are added; consult the [current GitHub Actions results](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml) rather than relying on an old number. Passing these tests does **not** prove biological validity.
 
-A green check only says that the tests passed. It doesn't prove a biological hypothesis, that the tests are complete, or that the statistical method is correct. This exercise checks data-handling rules; it does not estimate differential expression or disease associations.
+## Files to inspect
 
-## Which files should I read first?
+| Start here | What it contains |
+| --- | --- |
+| [`data/fictional_rna_observations.csv`](data/fictional_rna_observations.csv) | Input rows and assay flags |
+| [`generate_fictional_data.py`](generate_fictional_data.py) | Deterministic teaching-data generator |
+| [`analyze_fictional_rna.py`](analyze_fictional_rna.py) | CSV validation, classifications, summaries |
+| [`outputs/fictional_summary.csv`](outputs/fictional_summary.csv) and [`outputs/analysis_summary.json`](outputs/analysis_summary.json) | Output counts and dataset summary |
+| [`science_rules.py`](science_rules.py) | Scientific software rules |
+| [`science_rules_buggy.py`](science_rules_buggy.py) | **Intentionally defective** comparison only; not for analysis |
+| [`tests/`](tests/) and [`outputs/results.json`](outputs/results.json) | Automated regression checks and recorded RED/GREEN receipt |
+| [`figures/`](figures/) and [Figure methods](docs/FIGURES_AND_METHODS.md) | Source-derived explanatory graphics and how to rebuild them |
+| [`docs/RESULTS_AND_INTERPRETATION.md`](docs/RESULTS_AND_INTERPRETATION.md) | Scientific interpretation, separate examples, limitations |
 
-1. [`try_examples.py`](try_examples.py) — run three examples and see their outputs.
-2. [`science_rules.py`](science_rules.py) — read the three functions those examples call.
-3. [`tests/test_science_rules.py`](tests/test_science_rules.py) — see how a test checks the expected answer.
-
-The other scripts read the CSV, record test results, and build the figures. You can explore them afterward.
-
-## Where to look
-
-- [**Article and walkthrough**](MEDIUM_ARTICLE.md) — the reasoning behind each test, screenshots/figures, and a GitHub step-by-step guide.
-- [`data/fictional_rna_observations.csv`](data/fictional_rna_observations.csv) — the example measurements.
-- [`science_rules.py`](science_rules.py) and [`science_rules_buggy.py`](science_rules_buggy.py) — correct and deliberately wrong versions.
-- [`tests/`](tests) — checks for biological rules, CSV processing and report integrity.
-- [`outputs/`](outputs) and [`figures/`](figures) — the local run receipts and plots (PNG and SVG).
-- [`run_demo.py`](run_demo.py) — produces the RED/GREEN reports without changing your source files.
-
-## Regenerate the illustrated publication graphics
-
-The Medium article now uses **portrait-first editorial figures** for the RNA zero-versus-unassayed comparison and the intentional RED/GREEN test results. Separate landscape PNGs and editable SVG masters are retained in [figures](figures). These images are built from the **actual fictional CSV and recorded test results**, not manually typed plotting numbers.
-
-To rebuild the illustrated figures, install the optional renderer and run:
+To regenerate the colorful wide/portrait illustrations, also run:
 
 ```bash
 python -m pip install -r requirements-editorial.txt
 python make_editorial_figures.py
 ```
 
-The default beginner walkthrough does not require these additional packages. The hosted CI installs them and verifies the data, text contrast, large PNG exports, accessible SVG descriptions, and mobile typography. See the [publication figure audit](docs/publication/EDITORIAL_GRAPHICS_QA_20261027.md).
+The core analysis requires only `requirements.txt`; the illustrated graphics use the optional packages above. GitHub Actions runs the same source generation and integrity checks.
 
-## Using and citing the example
+## Interpretation and reuse
 
-You're welcome to clone, fork and adapt the code under the [MIT license](LICENSE). If you use it in teaching or writing, please cite the repository. GitHub's **Cite this repository** menu reads [`CITATION.cff`](CITATION.cff). For reproducibility, add the commit SHA you actually used:
+A zero count says **an assay was performed and detected none in that observation**. An unmeasured value says **there is no assay observation**. The distinction matters for downstream analyses, but **no differential expression, disease association, statistical power, causality, or genuine donor independence is estimated here**. The input schema and reader deliberately enforce a fixed 36-row teaching fixture; use the principles and tests as a template rather than applying this script unchanged to a real cohort.
 
-> dushyant-mishra. (2026). *Scientific Regression Demo: RNA Data, Regression Tests, and GitHub Actions* [Software and teaching materials]. GitHub. https://github.com/dushyant-mishra/scientific-regression-demo (commit `<SHA>`).
+The [short explanatory article](MEDIUM_ARTICLE.md) introduces the intuition. The repository itself is the source for the **data, code, executed results, scientific interpretation, and reproducible figures**.
 
-There is no DOI for this project. You can cite the [article](MEDIUM_ARTICLE.md) separately after it is published on Medium.
-
-
-## Maintaining this tutorial
-
-The completed historical reviews are indexed in [the audit](docs/audit/README.md). New contributors and coding agents can start from [the takeover guide](docs/handoff/README.md) rather than repeating old reviews.
+The code is available under the [MIT license](LICENSE). For reproducibility, cite this repository at **the exact commit used**; see [`CITATION.cff`](CITATION.cff). The separately stored [historical software audit](docs/audit/README.md) is for provenance and does not supersede current code and results.
