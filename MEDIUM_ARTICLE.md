@@ -26,7 +26,7 @@ Consider this small example from a teaching dataset. The gene names and counts a
 
 The first two rows concern the **same gene**. Study A detected RNA for `gene_3`; Study B did not assay `gene_3` at all. The last row illustrates something different: a real measured zero for `gene_2`. The dash is not a different way of writing zero. It means the gene wasn't assayed.
 
-The complete example contains six donors and twelve cells. Study B never assays \`gene_3\`, so its six entries for that gene should stay *unmeasured*. The rest of the cells let us see positive counts and measured zeros side by side.
+The complete example contains six donors and twelve cells. Study B never assays `gene_3`, so its six entries for that gene should stay *unmeasured*. The rest of the cells let us see positive counts and measured zeros side by side.
 
 ![RNA measurement matrix showing detected counts, measured zeros and unassayed genes](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_1_rna_measurements_v2.png)
 
@@ -36,21 +36,21 @@ It's easy to say, "Of course missing is not zero." The harder question is: **how
 
 ## Turn the scientific rule into a test
 
-We can put the expectation into a few lines of Python. The example repository has a function called \`observation_state()\` that receives two pieces of information: whether an assay was performed and the count, if one exists.
+We can put the expectation into a few lines of Python. The example repository has a function called `observation_state()` that receives two pieces of information: whether an assay was performed and the count, if one exists.
 
 Here is a small test you can read even if you have never written one:
 
-\`\`\`python
+```python
 from science_rules import observation_state
 
 def test_zero_is_different_from_unmeasured():
     assert observation_state(measured=True, count=0) == "MEASURED_ZERO"
     assert observation_state(measured=False, count=None) == "UNMEASURED"
-\`\`\`
+```
 
-Read \`assert\` as **"this must be true."**
+Read `assert` as **"this must be true."**
 
-The first check says that a real assay with count zero must be classified as \`MEASURED_ZERO\`. The second says that a gene not assayed, with no count at all (\`None\` in Python), must be classified as \`UNMEASURED\`.
+The first check says that a real assay with count zero must be classified as `MEASURED_ZERO`. The second says that a gene not assayed, with no count at all (`None` in Python), must be classified as `UNMEASURED`.
 
 We haven't proved anything about gene expression. We have specified what the software is *allowed to say about the measurement*.
 
@@ -60,15 +60,15 @@ Now comes the useful part: we can see whether the test notices when code gets th
 
 Suppose a coding assistant simplifies the classification logic to this:
 
-\`\`\`python
+```python
 return "MEASURED_ZERO" if not count else "MEASURED_DETECTED"
-\`\`\`
+```
 
 It looks compact. It is also wrong.
 
-In Python, both \`0\` and \`None\` behave as false-like values in that condition. The code never asks whether the gene was assayed. It returns \`MEASURED_ZERO\` in both cases.
+In Python, both `0` and `None` behave as false-like values in that condition. The code never asks whether the gene was assayed. It returns `MEASURED_ZERO` in both cases.
 
-Our second \`assert\` fails. The test has caught a scientific error that wouldn't necessarily stop the analysis from running.
+Our second `assert` fails. The test has caught a scientific error that wouldn't necessarily stop the analysis from running.
 
 The [example repository](https://github.com/dushyant-mishra/scientific-regression-demo) preserves an intentionally defective implementation alongside the corrected one. It runs **the same ten behavior tests** against each version, without changing the expected answers.
 
@@ -102,7 +102,7 @@ Missing values are only one place where apparently tidy results can hide an inco
 
 *Figure 3. These are constructed row labels, not 1,000 biological samples or an actual resampling experiment.*
 
-**Missing evidence is not positive evidence.** In a third, separate exercise, we assign two studies simple labels such as \`PASS\` and \`NOT_ESTIMABLE\`. Under the exercise's chosen rule, one missing required result cannot silently become an overall \`PASS\`. Those labels are supplied for teaching; they are not calculated from the RNA counts, nor are they a general method of combining studies.
+**Missing evidence is not positive evidence.** In a third, separate exercise, we assign two studies simple labels such as `PASS` and `NOT_ESTIMABLE`. Under the exercise's chosen rule, one missing required result cannot silently become an overall `PASS`. Those labels are supplied for teaching; they are not calculated from the RNA counts, nor are they a general method of combining studies.
 
 All three examples follow the same pattern: write down the scientific meaning that must survive a code change, then test it against an example that could break it.
 
