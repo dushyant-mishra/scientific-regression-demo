@@ -26,7 +26,7 @@ Consider this small example from a teaching dataset. The gene names and counts a
 
 The first two rows concern the **same gene**. Study A detected RNA for `gene_3`; Study B did not assay `gene_3` at all. The last row illustrates something different: a real measured zero for `gene_2`. The dash is not a different way of writing zero. It means the gene wasn't assayed.
 
-The complete example contains six donors and twelve cells. Study B never assays `gene_3`, so its six entries for that gene should stay *unmeasured*. The rest of the cells let us see positive counts and measured zeros side by side.
+The complete example has **6 donors** and twelve cells. Study B never assays `gene_3`, so its six entries for that gene should stay *unmeasured*. The rest of the cells let us see positive counts and measured zeros side by side.
 
 ![RNA measurement matrix showing detected counts, measured zeros and unassayed genes](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_1_rna_measurements_v2.png)
 
@@ -96,7 +96,7 @@ This doesn't require scientists to abandon AI-assisted coding. It gives the assi
 
 Missing values are only one place where apparently tidy results can hide an incorrect assumption.
 
-**Rows are not donors.** Imagine a table with 1,000 rows but only two distinct donor identifiers, each repeated 500 times. Counting rows and counting donors gives very different answers. Our second demonstration tests that distinction. It does not claim that counting IDs alone proves statistical independence.
+**Rows are not donors.** In a separate two-donor example, imagine a table with 1,000 rows but only two distinct donor identifiers, each repeated 500 times. Counting rows and counting donors gives very different answers. Our second demonstration tests that distinction. It does not claim that counting IDs alone proves statistical independence.
 
 ![Bar chart comparing 1000 repeated rows with two distinct donor IDs](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_4_donor_units_v3.png)
 
