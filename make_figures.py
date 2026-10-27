@@ -129,7 +129,9 @@ def chart_replicates():
     for spine in ax.spines.values():spine.set_visible(False)
     ax.grid(axis="y",alpha=.13)
     ax.set_axisbelow(True)
-    save(fig,"figure_4_donor_units_v3")
+    # Retain selectable text in this diagram for browser accessibility.
+    with plt.rc_context({"svg.fonttype": "none"}):
+        save(fig,"figure_4_donor_units_v3")
 
 
 def main():
