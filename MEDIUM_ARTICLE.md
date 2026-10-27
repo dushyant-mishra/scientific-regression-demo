@@ -14,16 +14,17 @@ A **measured zero** means the assay was performed and detected no transcripts in
 
 This is the distinction I want to protect—not just for today's script, but whenever someone edits it later.
 
-## Two cells, two very different meanings
+## One gene, three kinds of evidence
 
 Consider this small example from a teaching dataset. The gene names and counts are invented, but the data-handling problem is common.
 
 | Observation | Was the gene assayed? | RNA count | What we know |
 |---|---|---:|---|
-| Study A, cell_01, gene_2 | Yes | 0 | The assay detected none |
+| Study A, cell_01, gene_3 | Yes | 4 | The assay detected RNA |
 | Study B, cell_07, gene_3 | No | — | We have no measurement |
+| Study A, cell_01, gene_2 | Yes | 0 | The assay detected none |
 
-The dash is not a different way of writing zero. It means the question was never asked of that assay.
+The first two rows concern the **same gene**. Study A detected RNA for `gene_3`; Study B did not assay `gene_3` at all. The last row illustrates something different: a real measured zero for `gene_2`. The dash is not a different way of writing zero. It means the gene wasn't assayed.
 
 The complete example contains six donors and twelve cells. Study B never assays \`gene_3\`, so its six entries for that gene should stay *unmeasured*. The rest of the cells let us see positive counts and measured zeros side by side.
 
@@ -69,7 +70,7 @@ In Python, both \`0\` and \`None\` behave as false-like values in that condition
 
 Our second \`assert\` fails. The test has caught a scientific error that wouldn't necessarily stop the analysis from running.
 
-The <a href="https://github.com/dushyant-mishra/scientific-regression-demo">example repository</a> preserves an intentionally defective implementation alongside the corrected one. It runs **the same ten behavior tests** against each version, without changing the expected answers.
+The [example repository](https://github.com/dushyant-mishra/scientific-regression-demo) preserves an intentionally defective implementation alongside the corrected one. It runs **the same ten behavior tests** against each version, without changing the expected answers.
 
 ![Test outcomes from the deliberately defective and corrected implementations](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_2_test_results_v2.png)
 
