@@ -26,6 +26,10 @@ The [included RNA CSV](data/fictional_rna_observations.csv) has **6 donors**, **
 | Study A · cell_01 · gene_2 | Yes | 0 | `MEASURED_ZERO` |
 | Study B · cell_07 · gene_3 | No | blank | `UNMEASURED` |
 
+![Classification of the fictional RNA assay data by study and cell](figures/figure_1_rna_measurements_v2.png)
+
+*The original data-derived matrix distinguishes detected counts (+), measured zeros (0) and genes that were never assayed (—).*
+
 The **separate two-donor illustration** contains 1,000 repeated row labels representing two distinct donor IDs. It is not part of this CSV, is not an actual resampling experiment, and does not demonstrate statistical independence.
 
 ## Run the analysis
@@ -83,6 +87,8 @@ RED: 4 passed, 6 failed, 0 errors    # deliberately incorrect implementation
 GREEN: 10 passed, 0 failed, 0 errors # repaired implementation
 ```
 
+![The same scientific software checks against intentionally faulty and repaired code](figures/figure_2_test_results_v2.png)
+
 The RED failures are **intentional**. `run_demo.py` reports them while itself finishing successfully. The full main-suite count may increase as tests are added; consult the [current GitHub Actions results](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml) rather than relying on an old number. Passing these tests does **not** prove biological validity.
 
 ## Files to inspect
@@ -99,14 +105,7 @@ The RED failures are **intentional**. `run_demo.py` reports them while itself fi
 | [`figures/`](figures/) and [Figure methods](docs/FIGURES_AND_METHODS.md) | Source-derived explanatory graphics and how to rebuild them |
 | [`docs/RESULTS_AND_INTERPRETATION.md`](docs/RESULTS_AND_INTERPRETATION.md) | Scientific interpretation, separate examples, limitations |
 
-To regenerate the colorful wide/portrait illustrations, also run:
-
-```bash
-python -m pip install -r requirements-editorial.txt
-python make_editorial_figures.py
-```
-
-The core analysis requires only `requirements.txt`; the illustrated graphics use the optional packages above. GitHub Actions runs the same source generation and integrity checks.
+The analysis figures are regenerated from the committed CSV and recorded test results using `make_figures.py`. See [figure methods](docs/FIGURES_AND_METHODS.md).
 
 ## Interpretation and reuse
 
