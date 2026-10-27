@@ -6,7 +6,7 @@ Imagine you are comparing RNA expression between two studies. An AI coding agent
 
 But one question remains: **is the software making the scientific distinctions you intended?**
 
-What if a gene that was never assayed is recorded as having zero RNA? What if 1,000 computational resamples from two donors are treated as 1,000 independent donors? What if a cross-study result is marked as supported even though one required study lacks enough evidence?
+What if a gene that was never assayed is recorded as having zero RNA? What if 1,000 rows labeled with just two donor IDs are treated as 1,000 independent donors? What if a cross-study result is marked as supported even though one required study lacks enough evidence?
 
 These mistakes may produce no Python exception. They are mistakes in scientific meaning.
 
@@ -173,7 +173,7 @@ def test_technical_rows_are_not_independent_donors():
     assert result == {"technical_rows": 1000, "biological_n": 2}
 ```
 
-This **separate two-donor example** starts with 500 rows labeled `donor_01` and 500 labeled `donor_02`. It illustrates the distinction between counting rows and counting independent donors; it does not describe the six-donor RNA CSV.
+This **separate two-donor example** constructs 500 entries labeled `donor_01` and 500 labeled `donor_02`. It does not generate new biological measurements or actually perform resampling. It illustrates how counting repeated rows as independent donors would be wrong; it does not describe the six-donor RNA CSV.
 
 ![Donor accounting contrasts 1000 computational rows with 2 independent donors](https://raw.githubusercontent.com/dushyant-mishra/scientific-regression-demo/main/figures/figure_4_donor_units_v2.png)
 
@@ -270,7 +270,7 @@ The first command prints three small worked examples. The next two rebuild `data
 python -m pytest -q
 ```
 
-At the audited [27 October 2026 GitHub Actions run](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40537406640), **24 tests passed** on commit [`540143a`](https://github.com/dushyant-mishra/scientific-regression-demo/commit/540143af6b49c1177d2de99aba0d0e9768a10ce2). Ten are the behavior tests used in the RED/GREEN demonstration; the rest check the dataset, reporting, figures, and audit/handoff records. The total can change as tests are added, so use the command above to check the version you cloned.
+At the audited [27 October 2026 GitHub Actions run](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40553329081), **25 tests passed** on commit [`75ecd86`](https://github.com/dushyant-mishra/scientific-regression-demo/commit/75ecd86cec470843b5352f80ef1a67d92f89eba3). Ten are the behavior tests used in the RED/GREEN demonstration; the rest check the dataset, cell-to-donor consistency, reporting, figures, and audit/handoff records. The total can change as tests are added, so use the command above to check the version you cloned.
 
 **Step 5 — Reproduce the RED/GREEN evidence and figures.**
 
