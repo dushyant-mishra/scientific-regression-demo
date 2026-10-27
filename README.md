@@ -29,6 +29,8 @@ The second row is a **measured zero**: the assay looked for RNA from `gene_2` an
 
 ## Try it on your computer
 
+**First time using Python or GitHub?** Start with [Start here and the one-test RED/GREEN exercise in the article](MEDIUM_ARTICLE.md#start-here-if-this-is-your-first-python-tutorial). You can download a ZIP and run locally without Git, then follow the optional browser-only fork instructions to see CI catch a deliberate error.
+
 You need Python 3.11 or later and Git. In a terminal:
 
 ```bash
