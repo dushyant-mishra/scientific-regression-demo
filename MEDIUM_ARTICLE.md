@@ -1,4 +1,4 @@
-# When AI Writes Your RNA Analysis Code, Who Checks the Science?
+# The Code Runs. But Is the Science Right?
 
 *An illustrated, hands-on guide to scientific regression tests, RNA data, Python, GitHub Actions, and independent AI-agent review.*
 
