@@ -9,7 +9,7 @@ This is a prospective editorial verification of the **public tutorial repository
 - The workflow ran the beginner examples, deterministic CSV generator, RNA reader, full pytest suite, historical audit validator, deliberate RED/GREEN wrapper, and figure producer.
 - The log explicitly reports **24 passed** for the complete suite; **RED 4 passed / 6 failed / 0 errors** (intentional), **GREEN 10 passed / 0 failed / 0 errors**; **4 PNG + 4 SVG** figures generated.
 - The included example has 6 donors, 12 cells, 36 gene-by-cell rows; study_b/gene_3 has 6 unassayed records, not measured zeros.
-- The canonical medium draft is [MEDIUM_ARTICLE.md](../../MEDIUM_ARTICLE.md), not an old exported teaching kit. The manuscript's two dated full-suite references were reconciled with the current hosted count in this publication branch. The historical audit's 22-test starting count remains unchanged as historical evidence.
+- The canonical medium draft is [MEDIUM_ARTICLE.md](../../MEDIUM_ARTICLE.md), not an old exported teaching kit. The README and manuscript full-suite references were reconciled with the current hosted count in this publication branch. The historical audit's 22-test starting count remains unchanged as historical evidence.
 
 ## Scientific and code-review disposition
 
