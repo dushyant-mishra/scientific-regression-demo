@@ -16,9 +16,9 @@ Check whether Python is installed:
 python --version
 ~~~
 
-If that does not work, try \`py --version\` (Windows) or \`python3 --version\` (macOS/Linux). Use whichever command works in the rest of this guide wherever it says \`python\`. If none works, install Python from [python.org](https://www.python.org/downloads/) and repeat the version check.
+If that does not work, try `py --version` (Windows) or `python3 --version` (macOS/Linux). Use whichever command works in the rest of this guide wherever it says `python`. If none works, install Python from [python.org](https://www.python.org/downloads/) and repeat the version check.
 
-**Without Git:** Open the [project on GitHub](https://github.com/dushyant-mishra/scientific-regression-demo), select **Code → Download ZIP**, and extract the ZIP. Open a terminal in the extracted project folder. On Windows you can open that folder in File Explorer, type \`powershell\` into its address bar, and press Enter. On macOS, type \`cd \` into Terminal, drag the project folder into the window, and press Enter. (On Linux, open a terminal inside the extracted folder using your file manager.)
+**Without Git:** Open the [project on GitHub](https://github.com/dushyant-mishra/scientific-regression-demo), select **Code → Download ZIP**, and extract the ZIP. Open a terminal in the extracted project folder. On Windows you can open that folder in File Explorer, type `powershell` into its address bar, and press Enter. On macOS, type `cd ` into Terminal, drag the project folder into the window, and press Enter. (On Linux, open a terminal inside the extracted folder using your file manager.)
 
 **If Git is already installed:** You can instead run:
 
@@ -27,7 +27,7 @@ git clone https://github.com/dushyant-mishra/scientific-regression-demo.git
 cd scientific-regression-demo
 ~~~
 
-Either method works. You should now be inside the folder containing \`science_rules.py\`, \`requirements.txt\`, and \`try_examples.py\`.
+Either method works. You should now be inside the folder containing `science_rules.py`, `requirements.txt`, and `try_examples.py`.
 
 ## 2. Run the built-in example
 
@@ -50,15 +50,15 @@ gene_2, measured count 0: MEASURED_ZERO
 gene_3, not assayed: UNMEASURED
 ~~~
 
-Why these answers? For \`gene_2\`, an assay was performed but detected zero transcripts. For \`gene_3\`, no assay was performed, so there is no count to interpret. These are different scientific statements.
+Why these answers? For `gene_2`, an assay was performed but detected zero transcripts. For `gene_3`, no assay was performed, so there is no count to interpret. These are different scientific statements.
 
-If Python reports that it cannot find \`try_examples.py\`, you are probably in the wrong folder. Open the project folder in your file manager and reopen the terminal there. If \`pytest\` cannot be imported later, rerun the installation command above using the same Python command.
+If Python reports that it cannot find `try_examples.py`, you are probably in the wrong folder. Open the project folder in your file manager and reopen the terminal there. If `pytest` cannot be imported later, rerun the installation command above using the same Python command.
 
 ## 3. Write one test yourself
 
-Open a plain-text code editor such as VS Code. Inside the existing \`tests\` folder, create a new file named exactly:
+Open a plain-text code editor such as VS Code. Inside the existing `tests` folder, create a new file named exactly:
 
-\`test_my_first_rule.py\`
+`test_my_first_rule.py`
 
 Paste these lines into the file and save:
 
@@ -79,11 +79,11 @@ With your terminal still in the main project folder, run only your new test:
 python -m pytest -q tests/test_my_first_rule.py
 ~~~
 
-You should see **1 passed**. A function whose name starts with \`test_\` is recognized by the \`pytest\` testing tool; \`assert\` states an expected outcome.
+You should see **1 passed**. A function whose name starts with `test_` is recognized by the `pytest` testing tool; `assert` states an expected outcome.
 
 ## 4. Break the code, then repair it
 
-Open \`science_rules.py\`, find the function \`observation_state()\`, and locate this one line:
+Open `science_rules.py`, find the function `observation_state()`, and locate this one line:
 
 ~~~python
 return "UNMEASURED"
@@ -101,9 +101,9 @@ Save the file and run **the same** test command again:
 python -m pytest -q tests/test_my_first_rule.py
 ~~~
 
-You should now see **1 failed**, with an assertion indicating that \`MEASURED_ZERO\` did not equal the expected \`UNMEASURED\`.
+You should now see **1 failed**, with an assertion indicating that `MEASURED_ZERO` did not equal the expected `UNMEASURED`.
 
-Nothing is wrong with pytest: it has noticed the exact scientific mistake you introduced. Restore the line to \`return "UNMEASURED"\`, save, and rerun. You should see **1 passed** again.
+Nothing is wrong with pytest: it has noticed the exact scientific mistake you introduced. Restore the line to `return "UNMEASURED"`, save, and rerun. You should see **1 passed** again.
 
 **Important:** Do not change the test's expected answer just to turn a failure green. Keep the scientific rule fixed; repair the code.
 
@@ -111,7 +111,7 @@ You have just demonstrated the central idea: a test that is capable of rejecting
 
 ## 5. Explore the larger demonstration
 
-The included repository has a deliberately wrong implementation, \`science_rules_buggy.py\`, and a corrected one, \`science_rules.py\`. Rather than editing files back and forth, this command runs the same existing ten behavior tests against both:
+The included repository has a deliberately wrong implementation, `science_rules_buggy.py`, and a corrected one, `science_rules.py`. Rather than editing files back and forth, this command runs the same existing ten behavior tests against both:
 
 ~~~bash
 python run_demo.py
@@ -124,7 +124,7 @@ RED: 4 passed, 6 failed, 0 errors
 GREEN: 10 passed, 0 failed, 0 errors
 ~~~
 
-The **RED failures are intentional**; the program \`run_demo.py\` still completes successfully because it checks that the negative example really fails and the repaired one passes.
+The **RED failures are intentional**; the program `run_demo.py` still completes successfully because it checks that the negative example really fails and the repaired one passes.
 
 Run the broader suite with:
 
@@ -134,7 +134,7 @@ python -m pytest -q
 
 At the [audited revision from 27 October 2026](https://github.com/dushyant-mishra/scientific-regression-demo/commit/7483d44556a0ec7a7e5aad1e576240f2663659ca), there were **26 passing repository tests**. Your run may have **27** if you kept your new test, or a different number if the project has changed. This is *not* the same as the ten-test RED/GREEN comparison.
 
-To regenerate the figures, run \`python generate_fictional_data.py\`, \`python analyze_fictional_rna.py\`, and then \`python make_figures.py\`.
+To regenerate the figures, run `python generate_fictional_data.py`, `python analyze_fictional_rna.py`, and then `python make_figures.py`.
 
 ## 6. Optional: see GitHub Actions catch a mistake
 
@@ -143,13 +143,13 @@ Local tests depend on somebody remembering to run them. GitHub Actions can check
 You can do this optional exercise entirely in a browser. You will need a GitHub account and your own **fork**, meaning your own copy of the project. Do **not** open a deliberately broken pull request against the original author's repository.
 
 1. Open the [original project](https://github.com/dushyant-mishra/scientific-regression-demo) on GitHub and select **Fork → Create fork**. Navigate to **your** fork, not the original repository.
-2. Use the branch selector (normally labeled \`main\`) and create a branch called \`practice/first-science-test\`. Make sure you are viewing this branch before editing any file.
-3. Open \`science_rules.py\`, use the edit control, and change \`return "UNMEASURED"\` to \`return "MEASURED_ZERO"\`. Commit the change to your **practice branch**, not \`main\`.
+2. Use the branch selector (normally labeled `main`) and create a branch called `practice/first-science-test`. Make sure you are viewing this branch before editing any file.
+3. Open `science_rules.py`, use the edit control, and change `return "UNMEASURED"` to `return "MEASURED_ZERO"`. Commit the change to your **practice branch**, not `main`.
 4. Open **Actions** in your fork. GitHub may ask you to enable workflows on a newly forked repository. Find the run named **RNA scientific regression checks** for your practice-branch commit. It should **fail**, because the unchanged tests detect the deliberately broken rule.
 5. Open that run, select the **tests** job, and expand **Run all regression and reporting tests**. Look for the failing zero-versus-unmeasured test.
-6. Restore \`return "UNMEASURED"\` on the **same branch**, commit again, and inspect the new Actions run. The full check should now **pass**.
+6. Restore `return "UNMEASURED"` on the **same branch**, commit again, and inspect the new Actions run. The full check should now **pass**.
 
-You don't need to open or merge a pull request to learn from these two runs. If you decide to open a practice PR, select **your fork's \`main\`** as the base—never the original project.
+You don't need to open or merge a pull request to learn from these two runs. If you decide to open a practice PR, select **your fork's `main`** as the base—never the original project.
 
 The workflow also deliberately runs the broken teaching comparator in a separate step. Its expected six RED test failures appear **inside a successful workflow**. That is different from the overall workflow failing because a real regression was committed to the practice branch.
 
