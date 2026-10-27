@@ -1,2 +1,0 @@
-svgwrite>=1.4,<2
-CairoSVG>=2.7,<3

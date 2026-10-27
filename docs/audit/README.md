@@ -6,4 +6,4 @@ Start with [historical audit](HISTORICAL_AUDIT_20261027.md), [defect register](D
 
 **Audit entrypoint at 2026-10-27:** `1c5c52fd9ca61c6314ce35143db1a02431f40d27`, PRs #1–#6 merged, local full suite 22 passed, deliberate RED 6 failed/4 passed, GREEN 10 passed. Distinguish RED working as designed from a genuine CI failure.
 
-After these records, go to [takeover handoff](../handoff/README.md) once that branch is published. Do not inspect unrelated JEPA dataset/checkpoint archives to work on this public educational repo.
+For the actively runnable project, use the [repository README](../../README.md), [analysis results and interpretation](../RESULTS_AND_INTERPRETATION.md), and the [reproduction guide](../tutorial/FIRST_TEST_WALKTHROUGH.md). Internal agent takeover notes were retained separately from the public analysis repository. Do not inspect unrelated JEPA dataset/checkpoint archives to work on this teaching project.

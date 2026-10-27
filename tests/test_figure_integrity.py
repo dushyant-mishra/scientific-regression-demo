@@ -50,11 +50,11 @@ def test_donor_figure_labels_do_not_claim_resampling_or_proven_independence():
 
 
 def test_readme_and_article_reference_existing_current_figures():
-    for document in ("README.md", "MEDIUM_ARTICLE.md"):
+    for document in ("README.md", "docs/FIGURES_AND_METHODS.md"):
         content = (ROOT / document).read_text()
         referenced = re.findall(r"figures/(figure_[\w]+\.png)", content)
         assert referenced, document
         assert all((ROOT / "figures" / img).is_file() for img in referenced), (document, referenced)
         assert not any("figure_1_fictional_rna_matrix" in img for img in referenced), document
     assert "figure_1_rna_measurements_v2.png" in (ROOT / "README.md").read_text()
-    assert "figure_1_rna_measurements_v2.png" in (ROOT / "MEDIUM_ARTICLE.md").read_text()
+    assert "figure_1_rna_measurements_v2.png" in (ROOT / "docs/FIGURES_AND_METHODS.md").read_text()

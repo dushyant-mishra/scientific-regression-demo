@@ -1,6 +1,6 @@
 # Your first scientific regression test: an RNA zero that isn't a zero
 
-This is the **hands-on companion** to [The Code Runs. But Is the Science Right?](../../MEDIUM_ARTICLE.md). The article explains why the problem matters. This guide gives you the exact commands and edits to see a test catch the problem.
+This is a **hands-on guide** to the repository's [RNA data-handling analysis](../../README.md). It gives you the commands and edits to see a test catch a scientifically incorrect interpretation, and connects the exercise to the [actual results](../RESULTS_AND_INTERPRETATION.md).
 
 **What you'll do:** run a working example; add one test; introduce a mistake; watch the test fail; restore the code; and, optionally, see GitHub catch the same change.
 
