@@ -34,3 +34,11 @@ This is a prospective editorial verification of the **public tutorial repository
 - Local independent `git clone` in this takeover environment was blocked by DNS resolution of github.com; do **not** claim a fresh local end-to-end test. The exact-head hosted CI run above supplies execution evidence.
 - Medium editor preview, live published desktop/mobile visuals, external posting, and a published article URL are **not verified** here.
 - This review makes **no changes** to teaching implementations, datasets, tests, outputs, or figures. Historical audits and closed defects remain untouched.
+
+## Post-takeover publication source reconciliation
+
+On 27 October 2026, [PR #10](https://github.com/dushyant-mishra/scientific-regression-demo/pull/10) merged a prospective, separately falsified CSV reader consistency test. The new [main CI run 40553329081](https://github.com/dushyant-mishra/scientific-regression-demo/actions/runs/40553329081) succeeded on commit `75ecd86cec470843b5352f80ef1a67d92f89eba3`: **25 total tests passed**, while the unchanged ten-test teaching demonstration remains RED 4 passed/6 failed and GREEN 10 passed. The original 24-test result above is retained as a dated baseline; it was not fabricated or erased.
+
+The canonical article and README now cite the 25-test run. The manuscript was also corrected to say the two-donor example **repeats identifiers** and does not actually perform resampling. This correction does not alter the stored RNA CSV, test figures, or scientific claim limits.
+
+**Remaining external acceptance checks:** independently observed novice setup on another environment; actual Medium editor formatting and live desktop/mobile image readability; user-authorized Medium publication and final URL. Do not mark these complete from hosted CI alone.
