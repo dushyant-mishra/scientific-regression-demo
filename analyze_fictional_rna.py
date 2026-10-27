@@ -13,6 +13,7 @@ def analyze(input_file: Path) -> tuple[list[dict], dict]:
     counters = defaultdict(Counter)
     donor_by_study = defaultdict(set)
     cells_by_study = defaultdict(set)
+    cell_to_donor = {}
     seen = set()
     with input_file.open(newline="", encoding="utf-8") as stream:
         reader = csv.DictReader(stream)
@@ -24,6 +25,12 @@ def analyze(input_file: Path) -> tuple[list[dict], dict]:
             study, donor, cell, gene = (row[k] for k in ("study", "donor_id", "cell_id", "gene"))
             if study not in ("study_a", "study_b") or not donor or not cell:
                 raise ValueError("invalid study, donor, or cell")
+            # Every gene row for one cell must identify the same donor.
+            cell_key = (study, cell)
+            previous_donor = cell_to_donor.get(cell_key)
+            if previous_donor is not None and previous_donor != donor:
+                raise ValueError("cell assigned to multiple donors")
+            cell_to_donor[cell_key] = donor
             identity = (study, cell, gene)
             if identity in seen:
                 raise ValueError("duplicate measurement identity")
