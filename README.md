@@ -14,7 +14,7 @@ When combining observations, does the software keep these different states separ
 - **Measured zero:** the gene was assayed but no RNA was detected in that observation.
 - **Unmeasured:** the gene was not included in the assay, so no count exists.
 
-A measured zero cannot be substituted for an unassayed gene. Two further *separate* examples test that repeated row labels do not create extra donor identifiers, and that missing manually assigned study-evidence labels do not silently become a positive verdict.
+A measured zero cannot be substituted for an unassayed gene. **A blank count alone does not establish that a gene was unassayed**: here, that conclusion comes from the explicit `assayed` flag. In real data, assay-coverage metadata must also be independently checked. Two further *separate* examples test that repeated row labels do not create extra donor identifiers, and that missing manually assigned study-evidence labels do not silently become a positive verdict.
 
 ## Data and design
 
@@ -49,7 +49,7 @@ python make_figures.py
 
 No Git installation? Use **Code → Download ZIP** on the repository page, extract the files, open a terminal in the extracted directory, and start with the `python -m pip install` command. On systems where Python is called `py` or `python3`, substitute that for `python`.
 
-The scripts regenerate the fixed teaching CSV, classify the records, run the main checks, execute an intentional broken-versus-correct comparison, and rebuild the source-linked charts. For a fully guided first exercise, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md).
+The scripts regenerate the fixed teaching CSV, classify the records, run the main checks, execute an intentional broken-versus-correct comparison, and rebuild the source-linked charts. Follow the [reproducibility and verification checklist](docs/REPRODUCE_AND_VERIFY.md) to check each expected outcome and its limitations. For a fully guided first exercise, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md).
 
 ### What the analysis produces
 
@@ -104,6 +104,7 @@ The RED failures are **intentional**. `run_demo.py` reports them while itself fi
 | [`tests/`](tests/) and [`outputs/results.json`](outputs/results.json) | Automated regression checks and recorded RED/GREEN receipt |
 | [`figures/`](figures/) and [Figure methods](docs/FIGURES_AND_METHODS.md) | Source-derived explanatory graphics and how to rebuild them |
 | [`docs/RESULTS_AND_INTERPRETATION.md`](docs/RESULTS_AND_INTERPRETATION.md) | Scientific interpretation, separate examples, limitations |
+| [`docs/REPRODUCE_AND_VERIFY.md`](docs/REPRODUCE_AND_VERIFY.md) | End-to-end reproduction commands, expected outputs, and validation boundaries |
 
 The analysis figures are regenerated from the committed CSV and recorded test results using `make_figures.py`. See [figure methods](docs/FIGURES_AND_METHODS.md).
 
