@@ -31,7 +31,7 @@ Either method works. You should now be inside the folder containing `science_rul
 
 ## 2. Run the built-in example
 
-Install the two packages used by this project:
+Install the project's Python test dependency:
 
 ~~~bash
 python -m pip install -r requirements.txt
@@ -149,9 +149,9 @@ Run the broader suite with:
 python -m pytest -q
 ~~~
 
-At the [audited revision from 27 October 2026](https://github.com/dushyant-mishra/scientific-regression-demo/commit/7483d44556a0ec7a7e5aad1e576240f2663659ca), there were **26 passing repository tests**. Your run may have **27** if you kept your new test, or a different number if the project has changed. This is *not* the same as the ten-test RED/GREEN comparison.
+The number of passing repository tests may change as checks are added or removed, and the test you wrote in this walkthrough adds one locally. This is *not* the same as the ten-test RED/GREEN comparison.
 
-To regenerate the figures, run `python generate_fictional_data.py`, `python analyze_fictional_rna.py`, and then `python make_figures.py`.
+To regenerate the synthetic dataset and computed summaries, run `python generate_fictional_data.py` and then `python analyze_fictional_rna.py`.
 
 ## 6. Optional: see GitHub Actions catch a mistake
 

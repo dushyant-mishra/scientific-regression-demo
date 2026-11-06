@@ -1,7 +1,4 @@
-"""Independent integrity checks for the previous hardcoded-figure bug."""
-from pathlib import Path
-import xml.etree.ElementTree as ET
-
+"""Check that RED/GREEN results are counted from executed JUnit testcases."""
 import pytest
 
 from junit_results import parse_junit
@@ -27,11 +24,3 @@ def test_empty_report_is_rejected(tmp_path):
     p.write_text('<testsuite tests="0"/>')
     with pytest.raises(ValueError):
         parse_junit(p)
-
-
-def test_chart_bars_track_changed_report_counts():
-    from make_figures import test_bar_counts
-    a = {"red": {"passed": 4, "failed": 6, "errors": 0}, "green": {"passed": 10, "failed": 0, "errors": 0}}
-    assert test_bar_counts(a) == [(4, 6), (10, 0)]
-    b = {"red": {"passed": 2, "failed": 8, "errors": 0}, "green": {"passed": 10, "failed": 0, "errors": 0}}
-    assert test_bar_counts(b) == [(2, 8), (10, 0)]
