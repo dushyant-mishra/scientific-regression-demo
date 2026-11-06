@@ -15,7 +15,6 @@ python analyze_fictional_rna.py
 python -m pytest -q
 python run_demo.py
 python make_figures.py
-python scripts/validate_lane_audit.py
 ```
 
 `python` may be `python3` on some systems or `py` on Windows. On a shared workstation, use a virtual environment to avoid changing existing packages. The generation scripts write to tracked local paths; run them from a clean checkout when you want to compare regenerated files.
@@ -63,17 +62,17 @@ After the commands above, open:
 | [`figures/figure_1_rna_measurements_v2.png`](../figures/figure_1_rna_measurements_v2.png) | Zero / detected / not-assayed classifications |
 | [`figures/figure_2_test_results_v2.png`](../figures/figure_2_test_results_v2.png) | Exact before/after software test totals |
 
-The **main pytest suite** checks data, source logic, reports, figures, documentation consistency and historical custody. Its test count can change as tests are added; use the current CI run rather than treating a past total as a permanent requirement.
+The **main pytest suite** checks data, source logic, reports, figures, and documentation consistency. Its test count can change as tests are added; use the current CI run rather than treating a past total as a permanent requirement.
 
 For methodological limitations and the meaning of the results, read [Results and interpretation](RESULTS_AND_INTERPRETATION.md). For figure creation, see [Figures and methods](FIGURES_AND_METHODS.md). For a beginner exercise in deliberately breaking and repairing one rule, use the [first-test walkthrough](tutorial/FIRST_TEST_WALKTHROUGH.md).
 
 ## 5. GitHub-hosted verification
 
-The [GitHub Actions workflow](../.github/workflows/scientific-regressions.yml) installs dependencies, regenerates the synthetic data and analysis, runs the main suite, validates the historical audit custody, runs the deliberate RED/GREEN comparison and rebuilds the figures. It uploads outputs and plots as a workflow artifact.
+The [GitHub Actions workflow](../.github/workflows/scientific-regressions.yml) installs dependencies, regenerates the synthetic data and analysis, runs the main suite, runs the deliberate RED/GREEN comparison and rebuilds the figures. It uploads outputs and plots as a workflow artifact.
 
 Check the [current workflow results](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml) against the **exact commit** being examined. A successful workflow demonstrates that the specified checks completed; it is not a certificate of biological validity.
 
-The [historical audit](audit/README.md) is a frozen software-evidence record, **not** the latest state of the code or a publishing history. For a reusable citation, use [`CITATION.cff`](../CITATION.cff) and identify the exact commit.
+For a reusable citation, use [`CITATION.cff`](../CITATION.cff) and identify the exact commit. Historical changes and workflow outcomes are available through Git history and the merged pull requests.
 
 ## Repository scope
 

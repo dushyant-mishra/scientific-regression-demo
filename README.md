@@ -2,9 +2,19 @@
 
 [![RNA scientific regression checks](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml/badge.svg)](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml)
 
-This repository contains a **reproducible teaching analysis** showing how a functioning Python program can mishandle RNA measurement semantics. Readers can download the data, run the analysis, inspect the outputs and figures, and check exactly which scientific rules the tests enforce.
+This repository is a hands-on example of a subtle scientific coding mistake: treating a gene that was never assayed as though it had a measured RNA count of zero. Run the same tests against deliberately wrong and corrected Python code to see the difference.
 
-**Scope:** All RNA observations are **fictional**; `gene_1`–`gene_3` are placeholders. This is a validation of software data-handling rules, **not** a differential-expression study, a biological discovery, or an analysis of JEPA research datasets.
+**Start here** (Python 3.11+; after downloading or cloning the repository):
+
+```bash
+python -m pip install -r requirements.txt
+python try_examples.py
+python run_demo.py
+```
+
+The demo should report **RED: 4 passed, 6 failed** and **GREEN: 10 passed**. For step-by-step instructions, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md). The full data and figure reproduction commands appear below.
+
+**Scope:** All RNA observations are **fictional**; `gene_1`–`gene_3` are placeholders. This example checks software data-handling rules; it is not a differential-expression study or a biological discovery.
 
 ## The analysis question
 
@@ -114,4 +124,4 @@ A zero count says **an assay was performed and detected none in that observation
 
 The repository is the source for the **data, code, executed results, scientific interpretation, and reproducible figures**. New readers can start with the [hands-on guide](docs/tutorial/FIRST_TEST_WALKTHROUGH.md) or the [results explanation](docs/RESULTS_AND_INTERPRETATION.md).
 
-The code is available under the [MIT license](LICENSE). For reproducibility, cite this repository at **the exact commit used**; see [`CITATION.cff`](CITATION.cff). The separately stored [historical software audit](docs/audit/README.md) is for provenance and does not supersede current code and results.
+The code is available under the [MIT license](LICENSE). For reproducibility, cite this repository at **the exact commit used**; see [`CITATION.cff`](CITATION.cff). Older code and verification snapshots remain traceable through Git history and merged pull requests.

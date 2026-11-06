@@ -74,7 +74,7 @@ def main():
     out = ROOT / "outputs"
     out.mkdir(exist_ok=True)
     with (out / "fictional_summary.csv").open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(detail[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(detail[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(detail)
     (out / "analysis_summary.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")

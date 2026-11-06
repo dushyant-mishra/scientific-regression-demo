@@ -109,6 +109,23 @@ Nothing is wrong with pytest: it has noticed the exact scientific mistake you in
 
 You have just demonstrated the central idea: a test that is capable of rejecting an incorrect scientific interpretation.
 
+### Optional: see why a quick fix is not enough
+
+The corrected function also checks that `measured` is a real Boolean, not the text `"false"`. To see why, open `science_rules.py` and **temporarily comment out both lines** of the input-type guard near the top of `observation_state()`:
+
+~~~python
+# if type(measured) is not bool:
+#     raise TypeError("measured must be a bool")
+~~~
+
+Keep the next `if not measured:` rule intact, save the file, and run the existing test for text flags:
+
+~~~bash
+python -m pytest -q tests/test_science_rules.py -k test_07_assay_flag_must_be_a_real_bool
+~~~
+
+This test should **fail**: Python treats a nonempty string such as `"false"` as true, so `if not measured:` does not reject it. The test expects the function to raise an error instead of silently trusting text as an assay flag. Restore both guard lines immediately and run the same command again; it should **pass**. This optional experiment changes only your local working copy—do not commit the defective edit to the original repository.
+
 ## 5. Explore the larger demonstration
 
 The included repository has a deliberately wrong implementation, `science_rules_buggy.py`, and a corrected one, `science_rules.py`. Rather than editing files back and forth, this command runs the same existing ten behavior tests against both:
