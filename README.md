@@ -10,6 +10,7 @@ This repository is a hands-on example of a subtle scientific coding mistake: tre
 python -m pip install -r requirements.txt
 python try_examples.py
 python run_demo.py
+python merge_with_provenance.py
 ```
 
 The demo should report **RED: 4 passed, 6 failed** and **GREEN: 10 passed**. For step-by-step instructions, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md). The full data and report reproduction commands appear below.
@@ -38,6 +39,18 @@ The [included RNA CSV](data/fictional_rna_observations.csv) has **6 donors**, **
 
 The **separate two-donor illustration** contains 1,000 repeated row labels representing two distinct donor IDs. It is not part of this CSV, is not an actual resampling experiment, and does not demonstrate statistical independence.
 
+### A zero-filled union merge that keeps provenance
+
+A union merge can retain genes that an intersection would discard. The separate [standard-library example](merge_with_provenance.py) reads the same validated fictional CSV, reconstructs each cell's measured-gene panel using the explicit `assayed` flag, and pads absent features with numeric zero **while retaining a separate `measured` mask**. It is a teaching example, **not an AnnData implementation** or a real single-cell integration pipeline.
+
+| Record in the union | Numeric value | Measured? | Interpretation |
+| --- | ---: | --- | --- |
+| Study A / `cell_01` / `gene_2` | 0 | Yes | A measured zero |
+| Study B / `cell_07` / `gene_3` | 0 | No | A zero introduced to align the matrices |
+| Study A / `cell_01` / `gene_3` | 4 | Yes | A detected measurement |
+
+Both zero-valued entries are valid *numbers* in the merged representation, but only one was experimentally measured. Run `python merge_with_provenance.py` to see the provenance mask. The function rejects missing assay coverage or a mismatch between the stated panel and measured columns; an absent gene in a processed matrix could have been filtered, rather than unassayed, and must not be assigned provenance by guesswork. Assay flags in this CSV are intentionally constructed and are not independently verified biological metadata.
+
 ## Run the analysis
 
 Install **Python 3.11 or later**. With Git installed, open a terminal and run:
@@ -48,13 +61,14 @@ cd scientific-regression-demo
 python -m pip install -r requirements.txt
 python generate_fictional_data.py
 python analyze_fictional_rna.py
+python merge_with_provenance.py
 python -m pytest -q
 python run_demo.py
 ```
 
 No Git installation? Use **Code → Download ZIP** on the repository page, extract the files, open a terminal in the extracted directory, and start with the `python -m pip install` command. On systems where Python is called `py` or `python3`, substitute that for `python`.
 
-The scripts regenerate the fixed teaching CSV, classify the records, run the main checks, and execute an intentional broken-versus-correct comparison. Follow the [reproducibility and verification checklist](docs/REPRODUCE_AND_VERIFY.md) to check each expected outcome and its limitations. For a fully guided first exercise, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md).
+The scripts regenerate the fixed teaching CSV, classify the records, show how a zero-padded union can retain a measurement mask, run the main checks, and execute an intentional broken-versus-correct comparison. Follow the [reproducibility and verification checklist](docs/REPRODUCE_AND_VERIFY.md) to check each expected outcome and its limitations. For a fully guided first exercise, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md).
 
 ### What the analysis produces
 
@@ -73,7 +87,7 @@ The [actual summary CSV](outputs/fictional_summary.csv) contains:
 
 ## Verify the software behavior
 
-The main suite checks input validation, cell-to-donor consistency, output integrity, figures, and the stated rules:
+The main suite checks input validation, cell-to-donor consistency, union-merge provenance, output integrity, and the stated rules:
 
 ```bash
 python -m pytest -q
@@ -104,6 +118,7 @@ The RED failures are **intentional**. `run_demo.py` reports them while itself fi
 | [`outputs/fictional_summary.csv`](outputs/fictional_summary.csv) and [`outputs/analysis_summary.json`](outputs/analysis_summary.json) | Output counts and dataset summary |
 | [`science_rules.py`](science_rules.py) | Scientific software rules |
 | [`science_rules_buggy.py`](science_rules_buggy.py) | **Intentionally defective** comparison only; not for analysis |
+| [`merge_with_provenance.py`](merge_with_provenance.py) | Educational union merge that retains numeric padding and measurement flags |
 | [`tests/`](tests/) and [`outputs/results.json`](outputs/results.json) | Automated regression checks and recorded RED/GREEN receipt |
 | [`docs/RESULTS_AND_INTERPRETATION.md`](docs/RESULTS_AND_INTERPRETATION.md) | Scientific interpretation, separate examples, limitations |
 | [`docs/REPRODUCE_AND_VERIFY.md`](docs/REPRODUCE_AND_VERIFY.md) | End-to-end reproduction commands, expected outputs, and validation boundaries |

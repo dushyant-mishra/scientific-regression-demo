@@ -34,6 +34,12 @@ For a concrete contrast, `study_a / cell_01 / gene_3` is assayed with count 4; `
 
 A count of zero means **zero detected RNA transcripts in that observation**, not that the gene is absent from the genome, always inactive, or truly biologically unexpressed.
 
+### Additional merge demonstration: introduced zero versus measured zero
+
+The separate [union-merge example](../merge_with_provenance.py) constructs each fictional cell's measured-gene matrix from the validated CSV, retains the union of those genes, and adds zeros for missing columns. Crucially, it also carries a `measured` flag for each output entry. In the resulting matrix, `study_a/cell_01/gene_2` and `study_b/cell_07/gene_3` both have numeric value zero, but only the first is measured. The latter is introduced padding, not new RNA evidence.
+
+The [merge tests](../tests/test_merge_with_provenance.py) check that measurement provenance survives, unique genes are retained, missing assay coverage is rejected, and filtered/mismatched gene columns cannot be silently called unassayed. This is **not AnnData code**. It mimics the alignment idea using Python's standard library and the explicit fictional `assayed` flag. In real single-cell data, features absent after filtering are not automatically unassayed, and neither zero-padding nor masking alone validates ligand–receptor communication or addresses zero inflation.
+
 ### Interpretation 2: Rows are not independent donors
 
 In a **separate constructed test**, the list of donor identifiers contains 500 repeats of `donor_01` and 500 of `donor_02`. The function `replication_summary()` must return `technical_rows=1000` and `biological_n=2` (here, **two distinct identifiers**).
@@ -55,7 +61,7 @@ The [ten switchable behavior tests](../tests/test_science_rules.py) are executed
 | Deliberately buggy (RED) | 4 | 6 | 0 |
 | Repaired (GREEN) | 10 | 0 | 0 |
 
-These counts come from the checked-in [`outputs/results.json`](../outputs/results.json), which is generated from JUnit XML records, not manually asserted in the illustration. A failing RED comparison is **expected**: it shows the tests detect some intentionally inserted defects. Passing GREEN only verifies the behaviors covered by those ten tests. The broader test suite also checks dataset and report integrity, input edge cases, figure validity, and documentation consistency.
+These counts come from the checked-in [`outputs/results.json`](../outputs/results.json), which is generated from JUnit XML records, not manually asserted in the illustration. A failing RED comparison is **expected**: it shows the tests detect some intentionally inserted defects. Passing GREEN only verifies the behaviors covered by those ten tests. The broader test suite also checks dataset and report integrity, merge provenance, input edge cases, and documentation consistency.
 
 In particular, **none** of these tests demonstrates that a gene is differentially expressed, establishes the statistical power of an experiment, estimates causal effects, validates biological replication, or justifies inference about a disease.
 
@@ -67,6 +73,7 @@ From a checkout of the repository with Python 3.11 or newer:
 python -m pip install -r requirements.txt
 python generate_fictional_data.py
 python analyze_fictional_rna.py
+python merge_with_provenance.py
 python -m pytest -q
 python run_demo.py
 ```
