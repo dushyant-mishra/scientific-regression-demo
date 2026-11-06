@@ -151,7 +151,7 @@ python -m pytest -q
 
 The number of passing repository tests may change as checks are added or removed, and the test you wrote in this walkthrough adds one locally. This is *not* the same as the ten-test RED/GREEN comparison.
 
-To regenerate the synthetic dataset and computed summaries, run `python generate_fictional_data.py` and then `python analyze_fictional_rna.py`.
+To regenerate the synthetic dataset and computed summaries, run `python generate_fictional_data.py` and then `python analyze_fictional_rna.py`. For a separate example of deliberately adding zeros to align gene panels **without losing which values were actually measured**, try `python merge_with_provenance.py`.
 
 ## 6. Optional: see GitHub Actions catch a mistake
 

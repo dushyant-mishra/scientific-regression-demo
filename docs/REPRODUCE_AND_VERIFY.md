@@ -12,6 +12,7 @@ cd scientific-regression-demo
 python -m pip install -r requirements.txt
 python generate_fictional_data.py
 python analyze_fictional_rna.py
+python merge_with_provenance.py
 python -m pytest -q
 python run_demo.py
 ```
@@ -35,7 +36,17 @@ Inspect [`data/fictional_rna_observations.csv`](../data/fictional_rna_observatio
 
 The analysis deliberately accepts only its fixed fixture. Do not apply it to clinical data without defining and testing a suitable real-data schema, assay metadata, study design and analysis plan.
 
-## 3. Verify the two software implementations
+## 3. Check union-merge provenance
+
+Run `python merge_with_provenance.py`. The code first validates the same 36-row fixture, then keeps only measured gene counts in each cell's input panel. It constructs their **union** and introduces numeric zeros where a gene is absent while recording `measured=False` for those entries. A zero produced this way is not a measured RNA zero.
+
+- `study_a / cell_01 / gene_2` produces `value=0, measured=True`.
+- `study_b / cell_07 / gene_3` produces `value=0, measured=False`.
+- `study_a / cell_01 / gene_3` produces `value=4, measured=True`.
+
+The corresponding tests require the measured mask, retain genes unique to either input, and reject missing coverage, inconsistent panels, and impossible counts. The assay flags are **invented fixture metadata**; their correctness in real datasets would require independent evidence. An absent gene column in a processed matrix may indicate filtering rather than omission from the assay. This demonstration is not a substitute for a single-cell integration method or a model of zero inflation.
+
+## 4. Verify the two software implementations
 
 The unchanged [ten scientific-rule tests](../tests/test_science_rules.py) are run against:
 
@@ -48,7 +59,7 @@ The six failing tests exercise **multiple** data-handling and input-validation r
 
 A GREEN result means the implementation satisfied *the checks that were written*. It does not establish that the input metadata, chosen rule, biological model, or scientific inference is correct.
 
-## 4. Check the generated outputs
+## 5. Check the generated outputs
 
 After the commands above, open:
 
@@ -63,7 +74,7 @@ The **main pytest suite** checks data, source logic, reports, and documentation 
 
 For methodological limitations and the meaning of the results, read [Results and interpretation](RESULTS_AND_INTERPRETATION.md). For a beginner exercise in deliberately breaking and repairing one rule, use the [first-test walkthrough](tutorial/FIRST_TEST_WALKTHROUGH.md).
 
-## 5. GitHub-hosted verification
+## 6. GitHub-hosted verification
 
 The [GitHub Actions workflow](../.github/workflows/scientific-regressions.yml) installs dependencies, regenerates the synthetic data and analysis, runs the main suite, and runs the deliberate RED/GREEN comparison. It uploads the executed output records as a workflow artifact.
 
