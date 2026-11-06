@@ -55,7 +55,7 @@ The [ten switchable behavior tests](../tests/test_science_rules.py) are executed
 | Deliberately buggy (RED) | 4 | 6 | 0 |
 | Repaired (GREEN) | 10 | 0 | 0 |
 
-These counts come from the checked-in [`outputs/results.json`](../outputs/results.json), which is generated from JUnit XML records, not manually asserted in the illustration. A failing RED comparison is **expected**: it shows the tests detect some intentionally inserted defects. Passing GREEN only verifies the behaviors covered by those ten tests. The broader test suite also checks dataset and report integrity, input edge cases, figure validity, and historical audit consistency.
+These counts come from the checked-in [`outputs/results.json`](../outputs/results.json), which is generated from JUnit XML records, not manually asserted in the illustration. A failing RED comparison is **expected**: it shows the tests detect some intentionally inserted defects. Passing GREEN only verifies the behaviors covered by those ten tests. The broader test suite also checks dataset and report integrity, input edge cases, figure validity, and documentation consistency.
 
 In particular, **none** of these tests demonstrates that a gene is differentially expressed, establishes the statistical power of an experiment, estimates causal effects, validates biological replication, or justifies inference about a disease.
 
@@ -82,4 +82,4 @@ These commands operate on the **fixed teaching fixture** and write to tracked lo
 - Assay omission is represented explicitly by the `assayed` field; other datasets require verified coverage metadata. Do not infer unassayed status from a zero count alone.
 - Counting distinct donor IDs is not a complete biological-independence or statistical-inference model.
 - The RED/GREEN comparison is a software regression demonstration; a green build is not a biological validation certificate.
-- For reproducibility, [cite the precise commit](../CITATION.cff) and consult the [workflow checks](../.github/workflows/scientific-regressions.yml). The [historical audit](audit/README.md) preserves older snapshot evidence without overriding present source files.
+- For reproducibility, [cite the precise commit](../CITATION.cff) and consult the [workflow checks](../.github/workflows/scientific-regressions.yml). Past versions are traceable in Git history.

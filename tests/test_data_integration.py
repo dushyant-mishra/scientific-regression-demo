@@ -33,6 +33,11 @@ def test_generated_data_equal_to_checked_in_data(tmp_path):
     assert actual == list(rows())
 
 
+def test_summary_csv_uses_lf_line_endings():
+    summary = ROOT / "outputs" / "fictional_summary.csv"
+    assert b"\r\n" not in summary.read_bytes(), "regenerated summary should use LF, not CRLF"
+
+
 def test_plain_language_identifiers_remain_consistent():
     # The article, dataset, charts and README use these exact fictional IDs.
     generated = list(rows())
