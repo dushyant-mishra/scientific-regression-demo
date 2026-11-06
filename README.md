@@ -12,7 +12,7 @@ python try_examples.py
 python run_demo.py
 ```
 
-The demo should report **RED: 4 passed, 6 failed** and **GREEN: 10 passed**. For step-by-step instructions, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md). The full data and figure reproduction commands appear below.
+The demo should report **RED: 4 passed, 6 failed** and **GREEN: 10 passed**. For step-by-step instructions, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md). The full data and report reproduction commands appear below.
 
 **Scope:** All RNA observations are **fictional**; `gene_1`–`gene_3` are placeholders. This example checks software data-handling rules; it is not a differential-expression study or a biological discovery.
 
@@ -36,10 +36,6 @@ The [included RNA CSV](data/fictional_rna_observations.csv) has **6 donors**, **
 | Study A · cell_01 · gene_2 | Yes | 0 | `MEASURED_ZERO` |
 | Study B · cell_07 · gene_3 | No | blank | `UNMEASURED` |
 
-![Classification of the fictional RNA assay data by study and cell](figures/figure_1_rna_measurements_v2.png)
-
-*The original data-derived matrix distinguishes detected counts (+), measured zeros (0) and genes that were never assayed (—).*
-
 The **separate two-donor illustration** contains 1,000 repeated row labels representing two distinct donor IDs. It is not part of this CSV, is not an actual resampling experiment, and does not demonstrate statistical independence.
 
 ## Run the analysis
@@ -54,12 +50,11 @@ python generate_fictional_data.py
 python analyze_fictional_rna.py
 python -m pytest -q
 python run_demo.py
-python make_figures.py
 ```
 
 No Git installation? Use **Code → Download ZIP** on the repository page, extract the files, open a terminal in the extracted directory, and start with the `python -m pip install` command. On systems where Python is called `py` or `python3`, substitute that for `python`.
 
-The scripts regenerate the fixed teaching CSV, classify the records, run the main checks, execute an intentional broken-versus-correct comparison, and rebuild the source-linked charts. Follow the [reproducibility and verification checklist](docs/REPRODUCE_AND_VERIFY.md) to check each expected outcome and its limitations. For a fully guided first exercise, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md).
+The scripts regenerate the fixed teaching CSV, classify the records, run the main checks, and execute an intentional broken-versus-correct comparison. Follow the [reproducibility and verification checklist](docs/REPRODUCE_AND_VERIFY.md) to check each expected outcome and its limitations. For a fully guided first exercise, see [Your first scientific regression test](docs/tutorial/FIRST_TEST_WALKTHROUGH.md).
 
 ### What the analysis produces
 
@@ -97,8 +92,6 @@ RED: 4 passed, 6 failed, 0 errors    # deliberately incorrect implementation
 GREEN: 10 passed, 0 failed, 0 errors # repaired implementation
 ```
 
-![The same scientific software checks against intentionally faulty and repaired code](figures/figure_2_test_results_v2.png)
-
 The RED failures are **intentional**. `run_demo.py` reports them while itself finishing successfully. The full main-suite count may increase as tests are added; consult the [current GitHub Actions results](https://github.com/dushyant-mishra/scientific-regression-demo/actions/workflows/scientific-regressions.yml) rather than relying on an old number. Passing these tests does **not** prove biological validity.
 
 ## Files to inspect
@@ -112,16 +105,13 @@ The RED failures are **intentional**. `run_demo.py` reports them while itself fi
 | [`science_rules.py`](science_rules.py) | Scientific software rules |
 | [`science_rules_buggy.py`](science_rules_buggy.py) | **Intentionally defective** comparison only; not for analysis |
 | [`tests/`](tests/) and [`outputs/results.json`](outputs/results.json) | Automated regression checks and recorded RED/GREEN receipt |
-| [`figures/`](figures/) and [Figure methods](docs/FIGURES_AND_METHODS.md) | Source-derived explanatory graphics and how to rebuild them |
 | [`docs/RESULTS_AND_INTERPRETATION.md`](docs/RESULTS_AND_INTERPRETATION.md) | Scientific interpretation, separate examples, limitations |
 | [`docs/REPRODUCE_AND_VERIFY.md`](docs/REPRODUCE_AND_VERIFY.md) | End-to-end reproduction commands, expected outputs, and validation boundaries |
-
-The analysis figures are regenerated from the committed CSV and recorded test results using `make_figures.py`. See [figure methods](docs/FIGURES_AND_METHODS.md).
 
 ## Interpretation and reuse
 
 A zero count says **an assay was performed and detected none in that observation**. An unmeasured value says **there is no assay observation**. The distinction matters for downstream analyses, but **no differential expression, disease association, statistical power, causality, or genuine donor independence is estimated here**. The input schema and reader deliberately enforce a fixed 36-row teaching fixture; use the principles and tests as a template rather than applying this script unchanged to a real cohort.
 
-The repository is the source for the **data, code, executed results, scientific interpretation, and reproducible figures**. New readers can start with the [hands-on guide](docs/tutorial/FIRST_TEST_WALKTHROUGH.md) or the [results explanation](docs/RESULTS_AND_INTERPRETATION.md).
+The repository is the source for the **data, code, executed results, and scientific interpretation**. New readers can start with the [hands-on guide](docs/tutorial/FIRST_TEST_WALKTHROUGH.md) or the [results explanation](docs/RESULTS_AND_INTERPRETATION.md).
 
 The code is available under the [MIT license](LICENSE). For reproducibility, cite this repository at **the exact commit used**; see [`CITATION.cff`](CITATION.cff). Older code and verification snapshots remain traceable through Git history and merged pull requests.

@@ -1,4 +1,4 @@
-"""Integration checks actually read the published fictional CSV."""
+"""Integration checks read the committed fictional CSV."""
 from pathlib import Path
 
 import pytest
@@ -39,7 +39,7 @@ def test_summary_csv_uses_lf_line_endings():
 
 
 def test_plain_language_identifiers_remain_consistent():
-    # The article, dataset, charts and README use these exact fictional IDs.
+    # The dataset and reader-facing documentation use consistent fictional IDs.
     generated = list(rows())
     assert sorted({r["gene"] for r in generated}) == ["gene_1", "gene_2", "gene_3"]
     assert sorted({r["donor_id"] for r in generated}) == [f"donor_{i:02d}" for i in range(1, 7)]
